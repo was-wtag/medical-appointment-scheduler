@@ -10,6 +10,9 @@ erDiagram
         VARCHAR(255) phone_number
         VARCHAR(255) password
         VARCHAR(255) password_salt
+        DATETIME last_login_at
+        DATETIME created_at
+        DATETIME updated_at
     }
     
     DOCTOR_PROFILE {
@@ -19,6 +22,8 @@ erDiagram
         VARCHAR(255) clinic_address
         VARCHAR(255) registration_no
         VARCHAR(255) registration_id_proof
+        DATETIME created_at
+        DATETIME updated_at
     }
     
     PATIENT_PROFILE {
@@ -28,6 +33,8 @@ erDiagram
         TEXT medical_history
         VARCHAR(255) nid_no
         VARCHAR(255) nid_proof
+        DATETIME created_at
+        DATETIME updated_at
     }
     
     APPOINTMENT {
@@ -35,6 +42,8 @@ erDiagram
         INTEGER duration_minutes
         VARCHAR(255) meeting_url
         ENUM status
+        DATETIME created_at
+        DATETIME updated_at
     }
     
     DOCTOR_PROFILE |o--o| USER : "belongs_to"
