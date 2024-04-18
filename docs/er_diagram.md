@@ -23,8 +23,8 @@ erDiagram
         ENUM specialty
         ENUM working_day_start "Can be moved to a separate table for working days."
         ENUM working_day_end "Can be moved to a separate table for working days."
-        ENUM working_hour_start "Can be moved to a separate table for working hours."
-        ENUM working_hour_end "Can be moved to a separate table for working hours."
+        TIME working_hour_start "Can be moved to a separate table for working hours."
+        TIME working_hour_end "Can be moved to a separate table for working hours."
         VARCHAR(255) clinic_address
         VARCHAR(255) registration_no UK
         VARCHAR(255) registration_id_proof UK
@@ -50,7 +50,7 @@ erDiagram
     
     APPOINTMENT {
         SERIAL id PK
-        DATETIME scheduled_time
+        TIMESTAMP scheduled_time
         INTEGER duration_minutes
         VARCHAR(255) meeting_url
         ENUM status
