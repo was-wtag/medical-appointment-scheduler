@@ -79,4 +79,10 @@ class UserTest < ActiveSupport::TestCase
     assert user.save
     assert user.errors.messages.empty?
   end
+
+  test 'should save user with status set to pending' do
+    user = User.new(@users.fetch('valid_user', {}))
+    user.save
+    assert user.pending?
+  end
 end

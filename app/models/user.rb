@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   enum role: { admin: 0, doctor: 1, patient: 2 }
   enum gender: { not_specified: 0, female: 1, male: 2 }
+  enum status: { pending: 0, active: 1, deleted: 2}
 
   has_secure_password
 

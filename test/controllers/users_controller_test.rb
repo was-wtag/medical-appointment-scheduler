@@ -24,10 +24,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_select 'form[action=?]', users_path
   end
 
-  test 'should create user' do
+  test 'should create user with status set to pending' do
     assert_difference('User.count') do
       post users_url, params: { user: @users.fetch('valid_user', {}) }
     end
+
+    assert User.last.pending?
 
     assert_redirected_to user_url(User.last)
   end
