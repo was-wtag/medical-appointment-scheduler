@@ -10,18 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_22_080526) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_22_111608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "confirmation_tokens", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["token"], name: "index_confirmation_tokens_on_token", unique: true
-    t.index ["user_id"], name: "index_confirmation_tokens_on_user_id"
-  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name", limit: 128
@@ -41,5 +32,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_22_080526) do
     t.unique_constraint ["phone_number"], name: "check_if_phone_number_is_unique"
   end
 
-  add_foreign_key "confirmation_tokens", "users"
 end
