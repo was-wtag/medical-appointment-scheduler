@@ -1,10 +1,11 @@
-class HomeController < ApplicationController
-  def index
-  end
+# frozen_string_literal: true
 
-  def login
-  end
+class HomeController < ApplicationController
+  def index; end
+
+  def login; end
 
   def signup
+    redirect_to new_user_url
   end
 end

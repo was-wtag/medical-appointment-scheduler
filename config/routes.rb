@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get 'home/login'
   get 'home/signup'
 
+  # User
+  resources :users
+
   # Defines the root path route ("/")
   root to: redirect('/home/index')
 end
