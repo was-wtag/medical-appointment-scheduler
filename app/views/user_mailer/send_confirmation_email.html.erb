@@ -1,0 +1,9 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+  <div style="text-align: center;">
+    <h1 style="color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Welcome to WellCare, <%= @user.name %>!</h1>
+    <p style="font-size: 1.2em; color: #333;">You have successfully signed up to WellCare, your username is: <%= @user.username %>.</p>
+    <p style="font-size: 1.2em; color: #333;">To confirm your account, please click the button below:</p>
+    <%= link_to 'Confirm Account', confirmation_url(@user.confirmation_token), style: "background-color: #4CAF50; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; cursor: pointer; box-sizing: border-box;" %>
+    <p style="font-size: 1.2em; color: #333; margin-top: 20px;">If you didn't create an account with our site, please ignore this email.</p>
+  </div>
+</div>
