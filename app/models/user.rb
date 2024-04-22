@@ -11,4 +11,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone_number, presence: true, uniqueness: true, format: { with: /\A\+?[0-9]{1,3}-?[0-9]{1,14}\z/ }
   validates :password, length: { minimum: 8 }
+
+  has_one :confirmation_token
 end
