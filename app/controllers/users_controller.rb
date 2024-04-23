@@ -27,8 +27,6 @@ class UsersController < ApplicationController
       if @user.save
         format.html do
           redirect_to user_url(@user), notice: 'Registration successful. Confirmation email has been sent.'
-          @user.generate_confirmation_token
-          UserMailer.send_confirmation_email(@user).deliver_now
         end
         format.json { render :show, status: :created, location: @user }
       else

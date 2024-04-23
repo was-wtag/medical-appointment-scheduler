@@ -5,7 +5,8 @@ class User < ApplicationRecord
   enum gender: { not_specified: 0, female: 1, male: 2 }
   enum status: { pending: 0, active: 1, deleted: 2 }
 
-  after_create :generate_confirmation_token
+  after_create :generate_confirmation_token, if: -> { pending? }
+  after_create :send_confirmation_email, if: -> { pending? && confirmation_token.present? }
 
   attr_reader :confirmation_token
 
@@ -20,6 +21,10 @@ class User < ApplicationRecord
   def generate_confirmation_token
     self.confirmation_token = signed_id expires_in: ENV.fetch('CONFIRMATION_TOKEN_EXPIRES_IN', 5.minutes),
                                         purpose: :account_confirmation
+  end
+
+  def send_confirmation_email
+    UserMailer.send_confirmation_email(self).deliver_now
   end
 
   def full_name
