@@ -73,4 +73,15 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Configure ActionMailer to use SendGrid
+  config.action_mailer.smtp_settings = {
+    user_name: ENV.fetch('SENDGRID_USERNAME', 'apikey'),
+    password: ENV.fetch('SENDGRID_PASSWORD', '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'),
+    domain: 'sameenwasee@gmail.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 end

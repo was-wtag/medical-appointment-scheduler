@@ -25,7 +25,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: 'Registration successful. User was successfully created. Confirmation email has been sent.' }
+        format.html do
+          redirect_to user_url(@user), notice: 'Registration successful. Confirmation email has been sent.'
+          @user.generate_confirmation_token
+          UserMailer.send_confirmation_email(@user).deliver_now
+        end
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
