@@ -1,0 +1,52 @@
+<%= form_with(model: @user, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div style="color: red; font-weight: bold; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :first_name, style: "font-weight: bold;" %><br>
+    <%= form.text_field :first_name, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :last_name, style: "font-weight: bold;" %><br>
+    <%= form.text_field :last_name, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :gender, style: "font-weight: bold;" %><br>
+    <%= form.select :gender, User.genders.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :date_of_birth, style: "font-weight: bold;" %><br>
+    <%= form.date_select :date_of_birth, start_year: Date.today.year - 100, end_year: Date.today.year, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :role, style: "font-weight: bold;" %><br>
+    <%= form.select :role, User.roles.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :email, style: "font-weight: bold;" %><br>
+    <%= form.email_field :email, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :phone_number, style: "font-weight: bold;" %><br>
+    <%= form.telephone_field :phone_number, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div>
+    <%= form.submit "Update", style: "background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" %>
+  </div>
+<% end %>
