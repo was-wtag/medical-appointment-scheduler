@@ -86,6 +86,6 @@ Rails.application.configure do
     address: ENV.fetch('SENDGRID_ADDRESS', 'smtp.sendgrid.net'),
     port: ENV.fetch('SENDGRID_PORT', 587).to_i,
     authentication: ENV.fetch('SENDGRID_AUTHENTICATION', 'plain').to_sym,
-    enable_starttls_auto: ENV.fetch('SENDGRID_ENABLE_STARTTLS_AUTO', true).to_bool
+    enable_starttls_auto: ENV.fetch('SENDGRID_ENABLE_STARTTLS_AUTO', 'false') == 'true'
   }
 end
