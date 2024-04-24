@@ -1,10 +1,49 @@
-<p style="color: green"><%= notice %></p>
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+  <p style="font-size: 18px; color: #155724; background-color: #d4edda; border-color: #c3e6cb; padding: 10px; border-radius: 4px;"><%= notice %></p>
 
-<%= render @user %>
+  <div id="<%= dom_id @user %>" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;">
+    <strong style="color: #333; font-size: 1.5em;"><%= @user.full_name %></strong>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
+    <div style="display: flex; flex-direction: row; gap: 10px;">
+      <% case @user.gender %>
+      <% when 'female' %>
+        <div style="background-color: hotpink; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.gender %></div>
+      <% when 'male' %>
+        <div style="background-color: navy; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.gender %></div>
+      <% else %>
+        <div style="background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet); color: #fff; padding: .375rem .75rem; border-radius: .25rem;">Not Specified</div>
+      <% end %>
 
-  <%= button_to "Destroy this user", @user, method: :delete %>
+      <% case @user.role %>
+      <% when 'patient' %>
+        <div style="background-color: purple; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.role %></div>
+      <% when 'doctor' %>
+        <div style="background-color: magenta; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.role %></div>
+      <% when 'admin' %>
+        <div style="background-color: crimson; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.role %></div>
+      <% end %>
+
+      <% case @user.status %>
+      <% when 'pending' %>
+        <div style="background-color: #ffc107; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.status %></div>
+      <% when 'active' %>
+        <div style="background-color: #28a745; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.status %></div>
+      <% when 'deleted' %>
+        <div style="background-color: #dc3545; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= @user.status %></div>
+      <% end %>
+    </div>
+
+    <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Date of Birth:</strong> <%= @user.date_of_birth %></div>
+    <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Email:</strong> <%= @user.email %></div>
+    <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Phone Number:</strong> <%= @user.phone_number %></div>
+    <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Last Login:</strong> <%= @user.last_login_at %></div>
+    <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Joined:</strong> <%= @user.created_at %></div>
+    <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Updated:</strong> <%= @user.updated_at %></div>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px; width: 100%;">
+      <%= link_to 'Edit', edit_user_path(@user), style: "color: #fff; background-color: #ffc107; border-color: #ffc107; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+      <%= link_to 'Back to users', users_path, style: "color: #fff; background-color: #007bff; border-color: #007bff; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+      <%= button_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' }, style: "color: #fff; background-color: #dc3545; border-color: #dc3545; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+    </div>
+  </div>
 </div>

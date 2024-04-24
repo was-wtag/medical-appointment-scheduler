@@ -1,14 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+  <p style="font-size: 18px; color: #155724; background-color: #d4edda; border-color: #c3e6cb; padding: 10px; border-radius: 4px;"><%= notice %></p>
 
-<h1>Users</h1>
+  <h1 style="text-align: center; color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Users</h1>
 
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+  <div id="users" style="display: flex; flex-direction: column; gap: 20px;">
+    <% @users.each do |user| %>
+      <%= render user %>
+    <% end %>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <%= link_to "Register", new_user_path, style: "color: #fff; background-color: #007bff; border-color: #007bff; display: inline-block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+  </div>
 </div>
-
-<%= link_to "New user", new_user_path %>
