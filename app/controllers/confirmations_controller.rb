@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ConfirmationsController < ApplicationController
-
   def show
     confirmation_token = params[:token]
     user = User.find_signed(confirmation_token, purpose: :account_confirmation)
@@ -12,6 +11,7 @@ class ConfirmationsController < ApplicationController
 
     user&.active!
   end
+
   def new; end
 
   def create
@@ -25,7 +25,7 @@ class ConfirmationsController < ApplicationController
     return unless user&.pending?
 
     user.generate_confirmation_token
-    UserMailer.send_confirmation_email(user).deliver_now
+    user.send_confirmation_email
   end
 
   private
