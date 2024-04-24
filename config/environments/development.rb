@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,13 +21,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -77,11 +79,13 @@ Rails.application.configure do
   # Configure ActionMailer to use SendGrid
   config.action_mailer.smtp_settings = {
     user_name: ENV.fetch('SENDGRID_USERNAME', 'apikey'),
-    password: ENV.fetch('SENDGRID_PASSWORD', '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'),
-    domain: 'sameenwasee@gmail.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
+    password: ENV.fetch('SENDGRID_PASSWORD') do
+      warn 'Missing SENDGRID_PASSWORD environment variable. Please set it.'
+    end,
+    domain: ENV.fetch('SENDGRID_DOMAIN', 'sameenweasee@gmail.com'),
+    address: ENV.fetch('SENDGRID_ADDRESS', 'smtp.sendgrid.net'),
+    port: ENV.fetch('SENDGRID_PORT', 587).to_i,
+    authentication: ENV.fetch('SENDGRID_AUTHENTICATION', 'plain').to_sym,
+    enable_starttls_auto: ENV.fetch('SENDGRID_ENABLE_STARTTLS_AUTO', true).to_bool
   }
 end
