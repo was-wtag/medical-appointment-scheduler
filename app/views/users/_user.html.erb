@@ -7,7 +7,7 @@
         <div style="background-color: purple; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= user.role %></div>
       <% when 'doctor' %>
         <div style="background-color: magenta; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= user.role %></div>
-      <% when 'admin' %>
+      <% else %>
         <div style="background-color: crimson; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= user.role %></div>
       <% end %>
       <% case user.status %>
@@ -15,7 +15,7 @@
         <div style="background-color: #ffc107; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= user.status %></div>
       <% when 'active' %>
         <div style="background-color: #28a745; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= user.status %></div>
-      <% when 'deleted' %>
+      <% else %>
         <div style="background-color: #dc3545; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= user.status %></div>
       <% end %>
     </div>
