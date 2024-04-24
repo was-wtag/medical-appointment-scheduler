@@ -7,22 +7,24 @@ sequenceDiagram
     Server ->> User: Confirmation message
     Server ->> Database: Fetch user by email
     alt User not found
-        Database -->> Server: User not found
+        Database -->> Server: User not found [END]
     else User found
         Database -->> Server: User found
         Server ->> Server: Check user status
         alt User is active
-            Server -->> Server: User is active
+            Server -->> Server: User is active [END]
         else User is inactive
-            Server -->> Server: User is inactive
-            Server ->> Database: Fetch existing token
-            alt Token found
-                Database -->> Server: Token found
-                Server ->> Database: Delete existing token
-            Server ->> Database: Create new token
+            Server ->> Server: Generate signed token
             Server ->> Server: Generate confirmation link with token
             Server ->> Mailer: Dispatch email with confirmation link
-            Server ->> JobScheduler: Schedule job to delete token after specific duration
+            Mailer -->> User: Send confirmation email with link
+            User ->> Server: GET /confirmations/:token
+            Server ->> Server: Decode and validate token
+            alt Token is invalid
+                Server -->> User: Token is invalid [END]
+            else Token is valid
+                Server ->> Database: Update user status to active
+                Server -->> User: User is now active [END]
             end
         end
     end
