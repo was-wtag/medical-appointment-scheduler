@@ -79,8 +79,8 @@ Rails.application.configure do
   # Configure ActionMailer to use SendGrid
   config.action_mailer.smtp_settings = {
     user_name: ENV.fetch('SENDGRID_USERNAME', 'apikey'),
-    password: ENV.fetch('SENDGRID_PASSWORD') do
-      warn 'Missing SENDGRID_PASSWORD environment variable. Please set it.'
+    password: ENV.fetch('SENDGRID_API_KEY') do
+      warn 'Missing SENDGRID_API_KEY environment variable. Please set it.'
     end,
     domain: ENV.fetch('SENDGRID_DOMAIN', 'sameenweasee@gmail.com'),
     address: ENV.fetch('SENDGRID_ADDRESS', 'smtp.sendgrid.net'),
