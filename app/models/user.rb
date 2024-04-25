@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates :phone_number, presence: true, uniqueness: true,
                            format: { with: /\A\+?[0-9]{1,3}-?[0-9]{1,14}\z/, allow_blank: true }
   validates :password, length: { minimum: 8 }, if: -> { new_record? || password.present? }
+  validates :password_confirmation, presence: true, if: -> { new_record? || password.present? }
 
   def generate_confirmation_token
     self.confirmation_token = signed_id expires_in: ENV.fetch('CONFIRMATION_TOKEN_EXPIRES_IN', 5.minutes),
