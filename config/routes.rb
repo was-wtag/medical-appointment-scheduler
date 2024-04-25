@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   # Confirmations
   resources :confirmations, only: %i[new create show], param: :token
 
+  # Authentication
+  resource :auth, controller: :auth, only: %i[new create destroy]
+
   # Defines the root path route ("/")
   root to: redirect('/home/index')
 end

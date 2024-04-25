@@ -1,0 +1,14 @@
+<%= form_with(url: auth_path, method: :post, local: true) do |form| %>
+  <div style="margin-bottom: 1em;">
+    <%= form.label :email, style: "font-size: 1.2em; color: #333;" %>
+    <%= form.text_field :email, style: "width: 100%; padding: 0.5em; font-size: 1em;" %>
+  </div>
+
+  <div style="margin-bottom: 1em;">
+    <%= form.label :password, style: "font-size: 1.2em; color: #333;" %>
+    <%= form.password_field :password, style: "width: 100%; padding: 0.5em; font-size: 1em;" %>
+  </div>
+
+
+  <%= form.submit "Login", style: "background-color: #4CAF50; color: white; padding: 1em 2em; border: none; cursor: pointer;" %>
+<% end %>
