@@ -8,7 +8,7 @@ class User < ApplicationRecord
   after_create :generate_confirmation_token, if: -> { pending? }
   after_create :send_confirmation_email, if: -> { pending? && confirmation_token.present? }
 
-  attr_reader :confirmation_token
+  attr_accessor :confirmation_token
 
   has_secure_password
 
@@ -31,8 +31,4 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
-
-  private
-
-  attr_writer :confirmation_token
 end

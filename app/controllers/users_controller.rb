@@ -8,9 +8,11 @@ class UsersController < ApplicationController
     set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
   end
 
+  attr_accessor :users
+
   # GET /users or /users.json
   def index
-    @users = User.all
+    self.users = User.all
   end
 
   # GET /users/1 or /users/1.json
@@ -24,21 +26,21 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    return render :new, status: :unprocessable_entity unless @user.save
+    return render :new, status: :unprocessable_entity unless user.save
 
-    redirect_to @user, notice: 'Registration successful. Confirmation email sent.'
+    redirect_to user, notice: 'Registration successful. Confirmation email sent.'
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    return render :edit, status: :unprocessable_entity unless @user.update(user_params)
+    return render :edit, status: :unprocessable_entity unless user.update(user_params)
 
-    redirect_to @user, notice: 'User was successfully updated.'
+    redirect_to user, notice: 'User was successfully updated.'
   end
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy!
+    user.destroy!
 
     redirect_to users_url, notice: 'User was successfully destroyed.'
   end
@@ -46,7 +48,7 @@ class UsersController < ApplicationController
   private
 
   def set_action_to_user_finder
-    @action_to_user_finder = {
+    self.action_to_user_finder = {
       show: User.method(:find),
       new: User.method(:new),
       create: User.method(:new),
@@ -57,7 +59,7 @@ class UsersController < ApplicationController
   end
 
   def set_action_to_user_args
-    @action_to_user_args = {
+    self.action_to_user_args = {
       show: { args: [params[:id]], kwargs: {} },
       new: { args: [], kwargs: {} },
       create: { args: [], kwargs: user_params },
