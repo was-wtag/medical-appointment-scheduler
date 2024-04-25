@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy]
+  include UserSettable
+
+  before_action :set_action_to_user_finder, :set_action_to_user_args
+  before_action except: %i[index] do
+    set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
+  end
 
   # GET /users or /users.json
   def index
@@ -12,17 +17,13 @@ class UsersController < ApplicationController
   def show; end
 
   # GET /users/new
-  def new
-    @user = User.new
-  end
+  def new; end
 
   # GET /users/1/edit
   def edit; end
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
-
     return render :new, status: :unprocessable_entity unless @user.save
 
     redirect_to @user, notice: 'Registration successful. Confirmation email sent.'
@@ -44,14 +45,33 @@ class UsersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(params[:id])
+  def set_action_to_user_finder
+    @action_to_user_finder = {
+      show: User.method(:find),
+      new: User.method(:new),
+      create: User.method(:new),
+      edit: User.method(:find),
+      update: User.method(:find),
+      destroy: User.method(:find)
+    }
+  end
+
+  def set_action_to_user_args
+    @action_to_user_args = {
+      show: { args: [params[:id]], kwargs: {} },
+      new: { args: [], kwargs: {} },
+      create: { args: [], kwargs: user_params },
+      edit: { args: [params[:id]], kwargs: {} },
+      update: { args: [params[:id]], kwargs: {} },
+      destroy: { args: [params[:id]], kwargs: {} }
+    }
   end
 
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:first_name, :last_name, :gender, :date_of_birth, :role, :email, :phone_number,
                                  :password, :password_confirmation)
+  rescue ActionController::ParameterMissing
+    {}
   end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ConfirmationsController < ApplicationController
+  include UserSettable
+
   before_action :set_action_to_user_finder, :set_action_to_user_args
   before_action only: %i[show create] do
     set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
@@ -35,24 +37,17 @@ class ConfirmationsController < ApplicationController
     @user.send_confirmation_email
   end
 
-  def set_user
-    finder = @action_to_user_finder[action_name.to_sym]
-    args = @action_to_user_args[action_name.to_sym]
-
-    @user = yield(finder, args)
-  end
-
   def set_action_to_user_finder
     @action_to_user_finder = {
       show: User.method(:find_signed),
-      create: User.method(:find_by)
+      create: User.method(:find_by_email)
     }
   end
 
   def set_action_to_user_args
     @action_to_user_args = {
       show: { args: [params[:token]], kwargs: { purpose: :account_confirmation } },
-      create: { args: [], kwargs: { email: params[:email] } }
+      create: { args: [params[:email]], kwargs: {} }
     }
   end
 end
