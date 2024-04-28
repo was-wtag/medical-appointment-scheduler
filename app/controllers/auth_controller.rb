@@ -15,10 +15,13 @@ class AuthController < ApplicationController
                   }
                 }, :set_user, only: %i[create]
 
-  before_action :authenticate!, only: %i[destroy], unless: -> { :request.referrer.present? }
+  before_action :authenticate!, only: %i[destroy]
   before_action :do_not_authenticate!, except: %i[destroy]
 
-  def new; end
+  def new
+    pp session
+    pp cookies
+  end
 
   def create
     unless user&.authenticate(auth_params[:password])

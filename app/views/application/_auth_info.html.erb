@@ -1,0 +1,6 @@
+<% if session[:current_user] %>
+  <div style="position: fixed; top: 10px; right: 10px; display: flex; align-items: center; justify-content: space-between;">
+    <p style="margin: 0 10px 0 0;"><%= link_to session[:current_user]['first_name'], user_path(session[:current_user]['id']) %></p>
+    <%= button_to 'Logout', auth_path, method: :delete, style: "background-color: red; color: white; border: none; padding: 6px 12px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease 0s; cursor: pointer;" %>
+  </div>
+<% end %>

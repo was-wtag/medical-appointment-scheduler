@@ -16,7 +16,7 @@ module Authenticable
   end
 
   def do_not_authenticate!
-    redirect_to root_url unless current_user.nil? && cookies.key?(:jwt)
+    redirect_to root_url if current_user.present? || cookies.key?(:jwt)
   end
 
   def current_user
