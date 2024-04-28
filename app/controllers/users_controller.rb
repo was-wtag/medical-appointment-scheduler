@@ -3,10 +3,25 @@
 class UsersController < ApplicationController
   include UserSettable
 
-  before_action :set_action_to_user_finder, :set_action_to_user_args
-  before_action except: %i[index] do
-    set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
-  end
+  before_action lambda {
+                  self.action_to_user_finder = {
+                    show: User.method(:find),
+                    new: User.method(:new),
+                    create: User.method(:new),
+                    edit: User.method(:find),
+                    update: User.method(:find),
+                    destroy: User.method(:find)
+                  }
+                },
+                lambda {
+                  self.action_to_user_args = {
+                    show: { args: [params[:id]] },
+                    create: { kwargs: user_params },
+                    edit: { args: [params[:id]] },
+                    update: { args: [params[:id]] },
+                    destroy: { args: [params[:id]] }
+                  }
+                }, :set_user, except: %i[index]
 
   attr_accessor :users
 
@@ -46,28 +61,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def set_action_to_user_finder
-    self.action_to_user_finder = {
-      show: User.method(:find),
-      new: User.method(:new),
-      create: User.method(:new),
-      edit: User.method(:find),
-      update: User.method(:find),
-      destroy: User.method(:find)
-    }
-  end
-
-  def set_action_to_user_args
-    self.action_to_user_args = {
-      show: { args: [params[:id]], kwargs: {} },
-      new: { args: [], kwargs: {} },
-      create: { args: [], kwargs: user_params },
-      edit: { args: [params[:id]], kwargs: {} },
-      update: { args: [params[:id]], kwargs: {} },
-      destroy: { args: [params[:id]], kwargs: {} }
-    }
-  end
 
   # Only allow a list of trusted parameters through.
   def user_params

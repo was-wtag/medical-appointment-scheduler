@@ -3,10 +3,18 @@
 class ConfirmationsController < ApplicationController
   include UserSettable
 
-  before_action :set_action_to_user_finder, :set_action_to_user_args
-  before_action only: %i[show create] do
-    set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
-  end
+  before_action lambda {
+                  self.action_to_user_finder = {
+                    show: User.method(:find_signed),
+                    create: User.method(:find_by_email)
+                  }
+                },
+                lambda {
+                  self.action_to_user_args = {
+                    show: { args: [params[:token]], kwargs: { purpose: :account_confirmation } },
+                    create: { args: [params[:email]] }
+                  }
+                }, :set_user, only: %i[show create]
 
   def show
     return flash.now[:alert] = 'Account confirmation failed' if user.nil?
@@ -35,19 +43,5 @@ class ConfirmationsController < ApplicationController
   def resend_confirmation
     user.generate_confirmation_token
     user.send_confirmation_email
-  end
-
-  def set_action_to_user_finder
-    self.action_to_user_finder = {
-      show: User.method(:find_signed),
-      create: User.method(:find_by_email)
-    }
-  end
-
-  def set_action_to_user_args
-    self.action_to_user_args = {
-      show: { args: [params[:token]], kwargs: { purpose: :account_confirmation } },
-      create: { args: [params[:email]], kwargs: {} }
-    }
   end
 end
