@@ -19,4 +19,14 @@ class JwtServiceTest < ActiveSupport::TestCase
     decoded_payload = JwtService.decode(token)
     assert_equal @payload, decoded_payload
   end
+
+  test 'should not decode token if expired' do
+    token = JwtService.encode(@payload, 1.second.ago)
+    assert_raises(JWT::ExpiredSignature) { JwtService.decode(token) }
+  end
+
+  test 'should not decode token if invalid' do
+    token = JwtService.encode(@payload)
+    assert_raises(JWT::DecodeError) { JwtService.decode("#{token}invalid") }
+  end
 end
