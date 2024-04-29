@@ -19,6 +19,14 @@ FactoryBot.define do
     trait :missing_first_name do
       first_name { nil }
     end
+
+    trait :inavlid_email_for_login do
+      email { 'invalid_email' }
+    end
+
+    trait :inavlid_password_for_login do
+      password { 'invalid_password' }
+    end
   end
 
   factory :user_john_doe, class: User do
