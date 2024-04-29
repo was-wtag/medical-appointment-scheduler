@@ -3,7 +3,7 @@
 require 'factory_bot'
 require 'rails_helper'
 
-RSpec.describe 'User', type: :model do
+RSpec.describe User, type: :model do
   before do
     FactoryBot.create(:user_jane_doe)
   end

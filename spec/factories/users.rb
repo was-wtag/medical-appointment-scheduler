@@ -11,6 +11,14 @@ FactoryBot.define do
     phone_number { '+8801611111111' }
     password { 'janedoepassword' }
     password_confirmation { 'janedoepassword' }
+
+    trait :update_first_name do
+      first_name { 'Janet' }
+    end
+
+    trait :missing_first_name do
+      first_name { nil }
+    end
   end
 
   factory :user_john_doe, class: User do
