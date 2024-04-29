@@ -2,11 +2,15 @@
 
 class UsersController < ApplicationController
   include UserSettable
+  include Authenticable
 
   before_action :set_action_to_user_finder, :set_action_to_user_args
   before_action except: %i[index] do
     set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
   end
+
+  before_action :authenticate!, except: %i[new create]
+  before_action :do_not_authenticate!, only: %i[new create]
 
   attr_accessor :users
 
