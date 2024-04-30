@@ -31,6 +31,10 @@ FactoryBot.define do
     trait :role_is_doctor do
       role { User.roles[:doctor] }
     end
+
+    trait :role_is_patient do
+      role { User.roles[:patient] }
+    end
   end
 
   factory :user_john_doe, class: User do
