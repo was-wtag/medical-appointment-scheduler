@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   # Authentication
   resource :auth, controller: :auth, only: %i[new create destroy]
 
+  # Profile
+  resource :profile, controller: :profile, only: %i[show edit update]
+
   # Defines the root path route ("/")
   root to: redirect('/home/index')
 end
