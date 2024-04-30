@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_one :patient_profile, dependent: :destroy
+
   validates :first_name, presence: true, length: { maximum: 128 }
   validates :last_name, presence: true, length: { maximum: 128 }
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
