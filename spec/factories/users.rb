@@ -27,6 +27,10 @@ FactoryBot.define do
     trait :inavlid_password_for_login do
       password { 'invalid_password' }
     end
+
+    trait :role_is_doctor do
+      role { User.roles[:doctor] }
+    end
   end
 
   factory :user_john_doe, class: User do
