@@ -13,6 +13,3 @@ one:
   email: 'johndoe@example.com'
   phone_number: '+8801711111111'
   password_digest: <%= BCrypt::Password.create('johndoepassword', cost: 4) %>
-
-two: {}
-# column: value

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,26 +12,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_22_111608) do
+ActiveRecord::Schema[7.1].define(version: 20_240_430_034_154) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "users", force: :cascade do |t|
-    t.string "first_name", limit: 128
-    t.string "last_name", limit: 128
-    t.integer "gender", default: 0
-    t.date "date_of_birth"
-    t.integer "role", default: 2
-    t.string "email"
-    t.string "phone_number"
-    t.string "password_digest"
-    t.datetime "last_login_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "status", default: 0
+  create_table 'users', force: :cascade do |t|
+    t.string 'first_name', limit: 128, null: false
+    t.string 'last_name', limit: 128, null: false
+    t.integer 'gender', null: false
+    t.date 'date_of_birth', null: false
+    t.integer 'role', null: false
+    t.string 'email', null: false
+    t.string 'phone_number', null: false
+    t.string 'password_digest', null: false
+    t.datetime 'last_login_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'status', default: 0
 
-    t.unique_constraint ["email"], name: "check_if_email_is_unique"
-    t.unique_constraint ["phone_number"], name: "check_if_phone_number_is_unique"
+    t.unique_constraint ['email'], name: 'check_if_email_is_unique'
+    t.unique_constraint ['phone_number'], name: 'check_if_phone_number_is_unique'
   end
-
 end

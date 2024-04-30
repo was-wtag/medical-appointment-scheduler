@@ -20,6 +20,24 @@ class UserTest < ActiveSupport::TestCase
     assert user.errors.messages[:last_name].include?("can't be blank")
   end
 
+  test 'should not save user without gender' do
+    user = User.new(@users.fetch('missing gender', {}))
+    assert_not user.save
+    assert user.errors.messages[:gender].include?("can't be blank")
+  end
+
+  test 'should not save user without date_of_birth' do
+    user = User.new(@users.fetch('missing_date_of_birth', {}))
+    assert_not user.save
+    assert user.errors.messages[:date_of_birth].include?("can't be blank")
+  end
+
+  test 'should not save user without role' do
+    user = User.new(@users.fetch('missing_role', {}))
+    assert_not user.save
+    assert user.errors.messages[:role].include?("can't be blank")
+  end
+
   test 'should not save user without email' do
     user = User.new(@users.fetch('missing_email', {}))
     assert_not user.save

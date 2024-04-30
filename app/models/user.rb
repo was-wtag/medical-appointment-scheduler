@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  CONFIRMATION_TOKEN_EXPIRES_IN = 5.minutes
+
   enum role: { admin: 0, doctor: 1, patient: 2 }
   enum gender: { not_specified: 0, female: 1, male: 2 }
   enum status: { pending: 0, active: 1, deleted: 2 }
@@ -14,14 +16,14 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: { maximum: 128 }
   validates :last_name, presence: true, length: { maximum: 128 }
+  validates :gender, :date_of_birth, :role, :password_digest, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
   validates :phone_number, presence: true, uniqueness: true,
                            format: { with: /\A\+?[0-9]{1,3}-?[0-9]{1,14}\z/, allow_blank: true }
   validates :password, length: { minimum: 8 }, if: -> { new_record? || password.present? }
 
   def generate_confirmation_token
-    self.confirmation_token = signed_id expires_in: ENV.fetch('CONFIRMATION_TOKEN_EXPIRES_IN', 5.minutes),
-                                        purpose: :account_confirmation
+    self.confirmation_token = signed_id expires_in: CONFIRMATION_TOKEN_EXPIRES_IN, purpose: :account_confirmation
   end
 
   def send_confirmation_email

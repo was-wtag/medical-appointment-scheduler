@@ -17,6 +17,18 @@ missing_last_name:
   <<: *valid_user
   last_name: ~
 
+missing_gender:
+  <<: *valid_user
+  gender: ~
+
+missing_date_of_birth:
+  <<: *valid_user
+  date_of_birth: ~
+
+missing_role:
+  <<: *valid_user
+  role: ~
+
 missing_email:
   <<: *valid_user
   email: ~
