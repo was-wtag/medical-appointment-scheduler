@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_one :doctor_profile, dependent: :destroy
   has_one :patient_profile, dependent: :destroy
 
   validates :first_name, presence: true, length: { maximum: 128 }
@@ -33,5 +34,9 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def profile
+    doctor_profile || patient_profile
   end
 end
