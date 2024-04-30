@@ -2,11 +2,14 @@
 
 class ConfirmationsController < ApplicationController
   include UserSettable
+  include Authenticable
 
   before_action :set_action_to_user_finder, :set_action_to_user_args
   before_action only: %i[show create] do
     set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
   end
+
+  before_action :do_not_authenticate!
 
   def show
     return flash.now[:alert] = 'Account confirmation failed' if user.nil?
