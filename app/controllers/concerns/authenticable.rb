@@ -3,6 +3,10 @@
 module Authenticable
   extend ActiveSupport::Concern
 
+  included do
+    attr_accessor :current_user
+  end
+
   private
 
   def authenticate!
@@ -17,13 +21,5 @@ module Authenticable
 
   def do_not_authenticate!
     redirect_to root_url if current_user.present? || cookies.key?(:jwt)
-  end
-
-  def current_user
-    session[:current_user]
-  end
-
-  def current_user=(user)
-    session[:current_user] = user
   end
 end
