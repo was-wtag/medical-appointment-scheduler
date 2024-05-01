@@ -1,0 +1,8 @@
+<div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px; padding: 20px;">
+  <h3 style="color: #3f51b5;">Patient Profile</h3>
+  <p style="margin-bottom: 10px;"><strong>Blood Group:</strong> <%= @current_profile.not_specified? ? 'N/A' : @current_profile.blood_group.upcase.gsub('_POSITIVE', '+').gsub('_NEGATIVE', '-') %></p>
+  <p style="margin-bottom: 10px;"><strong>Height:</strong> <%= @current_profile.height_cm %> cm</p>
+  <p style="margin-bottom: 10px;"><strong>Weight:</strong> <%= @current_profile.weight_kg %> kg</p>
+  <p style="margin-bottom: 10px;"><strong>Medical History:</strong> <%= @current_profile.medical_history %></p>
+  <p style="margin-bottom: 10px;"><strong>NID No:</strong> <%= @current_profile.nid_number %></p>
+</div>
