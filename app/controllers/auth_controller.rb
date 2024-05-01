@@ -37,7 +37,7 @@ class AuthController < ApplicationController
   end
 
   def destroy
-    session.delete(:current_user)
+    self.current_user = nil
     cookies.delete(:jwt)
     redirect_to new_auth_url, notice: 'Logged out successfully'
   end

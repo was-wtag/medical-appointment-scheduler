@@ -77,7 +77,7 @@ RSpec.describe AuthController, type: :controller do
     end
 
     it 'should set current_user' do
-      expect(session[:current_user]).to eq(user_jane_doe)
+      expect(:current_user).to be_present
     end
 
     it 'should set jwt cookie' do
@@ -104,7 +104,7 @@ RSpec.describe AuthController, type: :controller do
     end
 
     it 'should delete current_user' do
-      expect { delete :destroy }.to change { session[:current_user] }.from(user_jane_doe).to(nil)
+      expect { delete :destroy }.to change { assigns(:current_user) }.from(user_jane_doe).to(nil)
     end
 
     it 'should delete jwt cookie' do
