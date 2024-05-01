@@ -8,7 +8,9 @@ class PatientProfile < ApplicationRecord
 
   validates :blood_group, presence: true
   validates :height_cm, :weight_kg, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :nid_number, presence: true, uniqueness: true, format: { with: /\A[0-9]{10,17}\z/, allow_blank: true }
+  validates :nid_number, presence: true, uniqueness: true, format: { with: /\A[0-9]{10,17}\z/, allow_blank: true },
+                         if: -> { new_record? || nid_number.present? }
+  validates :medical_history, presence: true, length: { maximum: 500 }
   validates :user, presence: true, uniqueness: true
   validate :user_to_be_a_patient, :user_not_to_have_a_doctor_profile
 

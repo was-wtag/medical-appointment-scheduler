@@ -13,5 +13,21 @@ class ProfileController < ApplicationController
 
   def edit; end
 
-  def update; end
+  def update
+    return render :edit, status: :unprocessable_entity unless current_profile.update(profile_params)
+
+    redirect_to edit_profile_url, notice: 'Profile was successfully updated.'
+  end
+
+  private
+
+  def profile_params
+    if current_user.doctor?
+      params.require(:doctor_profile).permit(:specialization, :description)
+    elsif current_user.patient?
+      params.require(:patient_profile).permit(:blood_group, :height_cm, :weight_kg, :medical_history)
+    else
+      {}
+    end
+  end
 end

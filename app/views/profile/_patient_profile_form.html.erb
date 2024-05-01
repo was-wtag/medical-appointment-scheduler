@@ -1,0 +1,27 @@
+<%= form_with(url: profile_path, model: profile, local: true) do |form| %>
+  <%= render partial: 'application/errors', locals: { instance: profile } %>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :blood_group, style: "font-weight: bold;" %><br>
+    <%= form.select :blood_group, PatientProfile.blood_groups.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :height_cm, style: "font-weight: bold;" %><br>
+    <%= form.number_field :height_cm, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :weight_kg, style: "font-weight: bold;" %><br>
+    <%= form.number_field :weight_kg, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :medical_history, style: "font-weight: bold;" %><br>
+    <%= form.text_area :medical_history, style: "width: 100%; padding: 10px;" %>
+  </div>
+
+  <div>
+    <%= form.submit "Update", style: "background-color: #3f51b5; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" %>
+  </div>
+<% end %>
