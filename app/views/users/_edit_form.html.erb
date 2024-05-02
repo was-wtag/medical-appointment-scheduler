@@ -1,5 +1,5 @@
-<%= form_with(model: @user, local: true) do |form| %>
-  <%= render 'errors' %>
+<%= form_with(model: user, local: true) do |form| %>
+  <%= render partial: 'application/errors', locals: { instance: user } %>
 
   <div style="margin-bottom: 20px;">
     <%= form.label :first_name, style: "font-weight: bold;" %><br>
