@@ -7,7 +7,7 @@ FactoryBot.define do
     weight_kg { 70 }
     medical_history { 'No medical history' }
     nid_number { '1234567890' }
-    association :user, factory: :user_jane_doe
+    association :user, factory: %i[user_jane_doe role_is_patient]
   end
 
   trait :missing_blood_group do
@@ -32,5 +32,9 @@ FactoryBot.define do
 
   trait :invalid_user_role do
     association :user, factory: %i[user_jane_doe role_is_doctor]
+  end
+
+  trait :update_blood_group do
+    blood_group { 'a_negative' }
   end
 end

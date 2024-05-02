@@ -23,7 +23,7 @@ class ProfileController < ApplicationController
 
   def profile_params
     if current_user.doctor?
-      params.require(:doctor_profile).permit(:specialization, :description)
+      params.require(:doctor_profile).permit(:specialty, :chamber_address)
     elsif current_user.patient?
       params.require(:patient_profile).permit(:blood_group, :height_cm, :weight_kg, :medical_history)
     else
