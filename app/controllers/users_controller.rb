@@ -14,8 +14,9 @@ class UsersController < ApplicationController
 
   before_action -> { self.profile_to_model = { 'patient' => PatientProfile, 'doctor' => DoctorProfile } },
                 only: %i[show create]
+  before_action -> { self.profile_partial = user.doctor? ? 'doctor_profile' : 'patient_profile' }, only: %i[show]
 
-  attr_accessor :users, :profile, :profile_to_model
+  attr_accessor :users, :profile, :profile_to_model, :profile_partial
 
   # GET /users or /users.json
   def index
