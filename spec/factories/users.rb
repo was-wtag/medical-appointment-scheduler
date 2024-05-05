@@ -35,6 +35,10 @@ FactoryBot.define do
     trait :role_is_patient do
       role { User.roles[:patient] }
     end
+
+    trait :update_status_to_active do
+      status { 'active' }
+    end
   end
 
   factory :user_john_doe, class: User do

@@ -37,4 +37,8 @@ FactoryBot.define do
   trait :update_blood_group do
     blood_group { 'a_negative' }
   end
+
+  trait :without_user_for_signup do
+    user { nil }
+  end
 end
