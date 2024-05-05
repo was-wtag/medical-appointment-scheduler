@@ -1,4 +1,4 @@
-<% if instance.errors.any? %>
+<% if instance&.errors&.any? %>
   <div style="color: red; font-weight: bold; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
     <h2><%= pluralize(instance.errors.count, "error") %> prohibited this <%= instance.class.name %> from being saved:</h2>
 

@@ -4,6 +4,8 @@ class PatientProfile < ApplicationRecord
   enum blood_group: { not_specified: 0, a_positive: 1, a_negative: 2, b_positive: 3, b_negative: 4, ab_positive: 5,
                       ab_negative: 6, o_positive: 7, o_negative: 8 }
 
+  after_create :send_confirmation_email_to_owner, if: -> { user.pending? && user.confirmation_token.present? }
+
   belongs_to :user
 
   validates :blood_group, presence: true
@@ -15,6 +17,10 @@ class PatientProfile < ApplicationRecord
   validate :user_to_be_a_patient, :user_not_to_have_a_doctor_profile
 
   private
+
+  def send_confirmation_email_to_owner
+    user.send_confirmation_email
+  end
 
   def user_to_be_a_patient
     errors.add(:user, 'is not a patient') unless user.patient?

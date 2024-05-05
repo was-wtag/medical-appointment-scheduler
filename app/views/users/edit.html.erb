@@ -1,7 +1,18 @@
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
-  <h1 style="text-align: center; color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Edit User</h1>
+  <h1 style="text-align: center; color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Update User Status</h1>
 
-  <%= render "edit_form", user: @user %>
+  <%= form_with(model: @user, local: true) do |form| %>
+    <%= render partial: 'application/errors', locals: { instance: @user } %>
+
+    <div style="margin-bottom: 20px;">
+      <%= form.label :status, style: "font-weight: bold;" %><br>
+      <%= form.select :status, User.statuses.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div>
+      <%= form.submit "Update", style: "background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" %>
+    </div>
+  <% end %>
 
   <br>
 

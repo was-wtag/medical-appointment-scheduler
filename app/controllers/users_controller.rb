@@ -12,7 +12,10 @@ class UsersController < ApplicationController
   before_action :authenticate!, except: %i[new create]
   before_action :do_not_authenticate!, only: %i[new create]
 
-  attr_accessor :users
+  before_action -> { self.profile_to_model = { 'patient' => PatientProfile, 'doctor' => DoctorProfile } },
+                only: %i[show create]
+
+  attr_accessor :users, :profile, :profile_to_model
 
   # GET /users or /users.json
   def index
@@ -30,7 +33,7 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    return render :new, status: :unprocessable_entity unless user.save
+    return render :new, status: :unprocessable_entity unless save_user_and_profile
 
     redirect_to user, notice: 'Registration successful. Confirmation email sent.'
   end
@@ -50,6 +53,20 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def save_user_and_profile
+    ActiveRecord::Base.transaction do
+      raise ActiveRecord::Rollback unless user.save
+
+      profile_model = profile_to_model[user.role]
+      self.profile = profile_model.new(profile_params)
+      profile.user = user
+
+      raise ActiveRecord::Rollback unless profile.save
+    end
+
+    user.errors.empty? && profile.errors.empty?
+  end
 
   def set_action_to_user_finder
     self.action_to_user_finder = {
@@ -75,9 +92,23 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :gender, :date_of_birth, :role, :email, :phone_number,
-                                 :password, :password_confirmation)
+    if action_name == 'create'
+      params.require('[user]').permit(:first_name, :last_name, :gender, :date_of_birth, :role, :email, :phone_number,
+                                      :password, :password_confirmation)
+    else
+      params.require(:user).permit(:status)
+    end
   rescue ActionController::ParameterMissing
     {}
+  end
+
+  def profile_params
+    if user.doctor?
+      params.require('[doctor_profile]').permit(:specialty, :registration_number, :chamber_address)
+    elsif user.patient?
+      params.require('[patient_profile]').permit(:blood_group, :height_cm, :weight_kg, :nid_number, :medical_history)
+    else
+      {}
+    end
   end
 end

@@ -39,9 +39,9 @@
     <div style="background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 10px; margin-bottom: 10px;"><strong>Updated:</strong> <%= @user.updated_at %></div>
 
     <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px; width: 100%;">
-      <%= link_to 'Edit', edit_user_path(@user), style: "color: #fff; background-color: #ffc107; border-color: #ffc107; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
-      <%= link_to 'Back to users', users_path, style: "color: #fff; background-color: #007bff; border-color: #007bff; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
-      <%= button_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' }, style: "color: #fff; background-color: #dc3545; border-color: #dc3545; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+      <%= link_to 'Change Status', edit_user_path(@user), style: "color: #fff; background-color: #ffc107; border-color: #ffc107; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+      <%= link_to 'Back to Users', users_path, style: "color: #fff; background-color: #007bff; border-color: #007bff; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+      <%= button_to 'Destroy User', @user, method: :delete, data: { confirm: 'Are you sure?' }, style: "color: #fff; background-color: #dc3545; border-color: #dc3545; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
     </div>
   </div>
 </div>

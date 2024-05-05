@@ -22,8 +22,8 @@
   </div>
 
   <div style="display: flex; flex-direction: column; gap: 10px;">
-    <%= link_to 'View', user_path(user), style: "color: #fff; background-color: #28a745; border-color: #28a745; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; margin-bottom: 10px; text-decoration: none;" %>
-    <%= link_to 'Edit', edit_user_path(user), style: "color: #fff; background-color: #ffc107; border-color: #ffc107; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; margin-bottom: 10px; text-decoration: none;" %>
-    <%= button_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, style: "color: #fff; background-color: #dc3545; border-color: #dc3545; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+    <%= link_to 'Details', user_path(user), style: "color: #fff; background-color: #28a745; border-color: #28a745; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; margin-bottom: 10px; text-decoration: none;" %>
+    <%= link_to 'Change', edit_user_path(user), style: "color: #fff; background-color: #ffc107; border-color: #ffc107; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; margin-bottom: 10px; text-decoration: none;" %>
+    <%= button_to 'Destroy', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, style: "color: #fff; background-color: #dc3545; border-color: #dc3545; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
   </div>
 </div>

@@ -1,49 +1,103 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <%= render 'errors' %>
+<%= form_with(url: users_path, method: :post, local: true, data: { controller: 'role' }) do |form| %>
+  <%= render partial: 'application/errors', locals: { instance: user } %>
+  <%= render partial: 'application/errors', locals: { instance: @profile } %>
 
-  <div style="margin-bottom: 20px;">
-    <%= form.label :first_name, style: "font-weight: bold;" %><br>
-    <%= form.text_field :first_name, style: "width: 100%; padding: 10px;" %>
+  <%= form.fields_for :user do |user_fields| %>
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :first_name, style: "font-weight: bold;" %><br>
+      <%= user_fields.text_field :first_name, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :last_name, style: "font-weight: bold;" %><br>
+      <%= user_fields.text_field :last_name, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :gender, style: "font-weight: bold;" %><br>
+      <%= user_fields.select :gender, User.genders.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :date_of_birth, style: "font-weight: bold;" %><br>
+      <%= user_fields.date_select :date_of_birth, start_year: Date.today.year - 100, end_year: Date.today.year, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label for="_user_role" style="font-weight: bold;">Role</label><br>
+      <select id="_user_role" name="[user][role]" data-role-target="role" data-action="change->role#toggleFields" style="width: 100%; padding: 10px;">
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :email, style: "font-weight: bold;" %><br>
+      <%= user_fields.email_field :email, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :phone_number, style: "font-weight: bold;" %><br>
+      <%= user_fields.telephone_field :phone_number, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :password, style: "font-weight: bold;" %><br>
+      <%= user_fields.password_field :password, style: "width: 100%; padding: 10px;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :password_confirmation, "Confirm Password", style: "font-weight: bold;" %><br>
+      <%= user_fields.password_field :password_confirmation, style: "width: 100%; padding: 10px;" %>
+    </div>
+  <% end %>
+
+  <div data-role-target="doctor">
+    <%= form.fields_for :doctor_profile do |doctor_profile_fields| %>
+      <div style="margin-bottom: 20px;">
+        <%= doctor_profile_fields.label :specialty, style: "font-weight: bold;" %><br>
+        <%= doctor_profile_fields.select :specialty, DoctorProfile.specialties.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <%= doctor_profile_fields.label :registration_number, style: "font-weight: bold;" %><br>
+        <%= doctor_profile_fields.text_field :registration_number, style: "width: 100%; padding: 10px;" %>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <%= doctor_profile_fields.label :chamber_address, style: "font-weight: bold;" %><br>
+        <%= doctor_profile_fields.text_area :chamber_address, style: "width: 100%; padding: 10px;" %>
+      </div>
+    <% end %>
   </div>
 
-  <div style="margin-bottom: 20px;">
-    <%= form.label :last_name, style: "font-weight: bold;" %><br>
-    <%= form.text_field :last_name, style: "width: 100%; padding: 10px;" %>
-  </div>
+  <div data-role-target="patient">
+    <%= form.fields_for :patient_profile  do |patient_profile_fields| %>
+      <div style="margin-bottom: 20px;">
+        <%= patient_profile_fields.label :blood_group, style: "font-weight: bold;" %><br>
+        <%= patient_profile_fields.select :blood_group, PatientProfile.blood_groups.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
+      </div>
 
-  <div style="margin-bottom: 20px;">
-    <%= form.label :gender, style: "font-weight: bold;" %><br>
-    <%= form.select :gender, User.genders.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
-  </div>
+      <div style="margin-bottom: 20px;">
+        <%= patient_profile_fields.label :height_cm, style: "font-weight: bold;" %><br>
+        <%= patient_profile_fields.number_field :height_cm, style: "width: 100%; padding: 10px;" %>
+      </div>
 
-  <div style="margin-bottom: 20px;">
-    <%= form.label :date_of_birth, style: "font-weight: bold;" %><br>
-    <%= form.date_select :date_of_birth, start_year: Date.today.year - 100, end_year: Date.today.year, style: "width: 100%; padding: 10px;" %>
-  </div>
+      <div style="margin-bottom: 20px;">
+        <%= patient_profile_fields.label :weight_kg, style: "font-weight: bold;" %><br>
+        <%= patient_profile_fields.number_field :weight_kg, style: "width: 100%; padding: 10px;" %>
+      </div>
 
-  <div style="margin-bottom: 20px;">
-    <%= form.label :role, style: "font-weight: bold;" %><br>
-    <%= form.select :role, User.roles.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
-  </div>
+      <div style="margin-bottom: 20px;">
+        <%= patient_profile_fields.label :nid_number, style: "font-weight: bold;" %><br>
+        <%= patient_profile_fields.text_field :nid_number, style: "width: 100%; padding: 10px;" %>
+      </div>
 
-  <div style="margin-bottom: 20px;">
-    <%= form.label :email, style: "font-weight: bold;" %><br>
-    <%= form.email_field :email, style: "width: 100%; padding: 10px;" %>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <%= form.label :phone_number, style: "font-weight: bold;" %><br>
-    <%= form.telephone_field :phone_number, style: "width: 100%; padding: 10px;" %>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <%= form.label :password, style: "font-weight: bold;" %><br>
-    <%= form.password_field :password, style: "width: 100%; padding: 10px;" %>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <%= form.label :password_confirmation, "Confirm Password", style: "font-weight: bold;" %><br>
-    <%= form.password_field :password_confirmation, style: "width: 100%; padding: 10px;" %>
+      <div style="margin-bottom: 20px;">
+        <%= patient_profile_fields.label :medical_history, style: "font-weight: bold;" %><br>
+        <%= patient_profile_fields.text_area :medical_history, style: "width: 100%; padding: 10px;" %>
+      </div>
+    <% end %>
   </div>
 
   <div>

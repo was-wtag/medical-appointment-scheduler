@@ -7,6 +7,8 @@ class DoctorProfile < ApplicationRecord
                     nephrologist: 16, hematologist: 17, allergist: 18, geriatrician: 19, radiologist: 20,
                     anesthesiologist: 21, surgeon: 22, other: 23 }
 
+  after_create :send_confirmation_email_to_owner, if: -> { user.pending? && user.confirmation_token.present? }
+
   belongs_to :user
 
   validates :specialty, :chamber_address, presence: true
@@ -14,6 +16,10 @@ class DoctorProfile < ApplicationRecord
   validate :user_to_be_a_doctor, :user_not_to_have_a_patient_profile
 
   private
+
+  def send_confirmation_email_to_owner
+    user.send_confirmation_email
+  end
 
   def user_to_be_a_doctor
     errors.add(:user, 'is not a doctor') unless user.doctor?

@@ -6,7 +6,6 @@ class User < ApplicationRecord
   enum status: { pending: 0, active: 1, deleted: 2 }
 
   after_create :generate_confirmation_token, if: -> { pending? }
-  after_create :send_confirmation_email, if: -> { pending? && confirmation_token.present? }
 
   attr_accessor :confirmation_token
 
