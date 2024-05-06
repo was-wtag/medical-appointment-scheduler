@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   has_one :doctor_profile, dependent: :destroy
   has_one :patient_profile, dependent: :destroy
+  has_many :doctor_appointments, class_name: 'Appointment', foreign_key: 'doctor_id', dependent: :destroy
+  has_many :patient_appointments, class_name: 'Appointment', foreign_key: 'patient_id', dependent: :destroy
 
   validates :first_name, presence: true, length: { maximum: 128 }
   validates :last_name, presence: true, length: { maximum: 128 }
