@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   # Profile
   resource :profile, controller: :profile, only: %i[show edit update]
 
+  # Doctors
+  resources :doctors, only: %i[index show]
+
   # Defines the root path route ("/")
   root to: redirect('/home/index')
 end

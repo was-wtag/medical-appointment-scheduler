@@ -1,0 +1,9 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+  <h1 style="text-align: center; color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Doctors</h1>
+
+  <div id="doctors" style="display: flex; flex-direction: column; gap: 20px;">
+    <% @users.each do |user| %>
+      <%= render partial: 'doctor', locals: { doctor: user } %>
+    <% end %>
+  </div>
+</div>
