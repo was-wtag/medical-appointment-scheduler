@@ -225,6 +225,8 @@ GEM
     rake (13.1.0)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
+    redis-client (0.22.1)
+      connection_pool
     regexp_parser (2.9.0)
     reline (0.5.0)
       io-console (~> 0.5)
@@ -269,6 +271,11 @@ GEM
       websocket (~> 1.0)
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
+    sidekiq (7.2.4)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.19.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -329,6 +336,7 @@ DEPENDENCIES
   rubocop
   selenium-webdriver
   sendgrid-ruby
+  sidekiq
   sprockets-rails
   stimulus-rails
   turbo-rails
