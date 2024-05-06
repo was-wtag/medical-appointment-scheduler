@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   before_action :authenticate!, except: %i[new create]
   before_action :do_not_authenticate!, only: %i[new create]
+  before_action :authorize_user
 
   before_action -> { self.profile_to_model = { 'patient' => PatientProfile, 'doctor' => DoctorProfile } },
                 only: %i[show create]
@@ -20,7 +21,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    self.users = User.all
+    self.users = policy_scope(User, policy_scope_class: UserPolicy::Scope)
   end
 
   # GET /users/1 or /users/1.json
@@ -89,6 +90,10 @@ class UsersController < ApplicationController
       update: { args: [params[:id]], kwargs: {} },
       destroy: { args: [params[:id]], kwargs: {} }
     }
+  end
+
+  def authorize_user
+    authorize user, policy_class: UserPolicy
   end
 
   # Only allow a list of trusted parameters through.
