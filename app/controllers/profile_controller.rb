@@ -3,9 +3,11 @@
 class ProfileController < ApplicationController
   include Authenticable
 
-  before_action :authenticate!
-  before_action -> { self.current_profile = current_user.profile }
-  before_action -> { self.current_profile_partial = current_user.doctor? ? 'doctor_profile' : 'patient_profile' }
+  before_action :authenticate!, :authorize_profile
+  before_action lambda {
+                  self.current_profile = current_user.profile
+                  self.current_profile_partial = current_user.doctor? ? 'doctor_profile' : 'patient_profile'
+                }
 
   attr_accessor :current_profile, :current_profile_partial
 
@@ -20,6 +22,10 @@ class ProfileController < ApplicationController
   end
 
   private
+
+  def authorize_profile
+    authorize :dummy, policy_class: ProfilePolicy
+  end
 
   def profile_params
     if current_user.doctor?
