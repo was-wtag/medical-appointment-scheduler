@@ -43,8 +43,11 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # Do not send mail to real world in development environment
-  config.action_mailer.perform_deliveries = false
+  # Send mail to real world in development environment
+  config.action_mailer.perform_deliveries = true
+
+  # Use letter opener to open mail in browser
+  config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

@@ -28,7 +28,7 @@ class User < ApplicationRecord
   end
 
   def send_confirmation_email
-    UserMailer.send_confirmation_email(self).deliver_now
+    UserMailer.send_confirmation_email(full_name, email, confirmation_token).deliver_later
   end
 
   def full_name
