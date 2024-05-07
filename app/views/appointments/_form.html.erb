@@ -1,42 +1,22 @@
-<%= form_with(model: appointment) do |form| %>
-  <% if appointment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+<%= form_with(model: appointment, html: { style: 'display: flex; flex-direction: column; max-width: 600px; margin: auto;' }) do |form| %>
+  <%= render partial: 'application/errors', locals: { instance: appointment } %>
 
-      <ul>
-        <% appointment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div style="margin-bottom: 20px;">
+    <%= form.label :scheduled_time, style: "display: block; font-weight: bold;" %>
+    <%= form.datetime_field :scheduled_time, style: "width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" %>
+  </div>
 
-  <div>
-    <%= form.label :scheduled_time, style: "display: block" %>
-    <%= form.datetime_field :scheduled_time %>
+  <div style="margin-bottom: 20px;">
+    <%= form.label :duration_minutes, style: "display: block; font-weight: bold;" %>
+    <%= form.number_field :duration_minutes, style: "width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :doctor_id, style: "display: block; font-weight: bold;" %>
+    <%= form.collection_select :doctor_id, User.doctors, :id, :full_name, style: "width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" %>
   </div>
 
   <div>
-    <%= form.label :duration_minutes, style: "display: block" %>
-    <%= form.number_field :duration_minutes %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.number_field :status %>
-  </div>
-
-  <div>
-    <%= form.label :patient_user_id, style: "display: block" %>
-    <%= form.text_field :patient_user_id %>
-  </div>
-
-  <div>
-    <%= form.label :doctor_user_id, style: "display: block" %>
-    <%= form.text_field :doctor_user_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit 'Submit', style: "background-color: #4CAF50; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px;" %>
   </div>
 <% end %>

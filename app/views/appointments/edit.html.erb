@@ -1,10 +1,12 @@
-<h1>Editing appointment</h1>
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
+  <h1 style="text-align: center; color: #4CAF50; font-size: 32px; margin-bottom: 30px;">Reschedule Appointment</h1>
 
-<%= render "form", appointment: @appointment %>
+  <div style="background-color: #f8f9fa; border-radius: 5px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.15);">
+    <%= render "edit_form", appointment: @appointment %>
+  </div>
 
-<br>
-
-<div>
-  <%= link_to "Show this appointment", @appointment %> |
-  <%= link_to "Back to appointments", appointments_path %>
+  <div style="text-align: center; margin-top: 30px;">
+    <%= link_to "Show this appointment", @appointment, style: "background-color: #4CAF50; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px;" %> |
+    <%= link_to "Back to appointments", appointments_path, style: "background-color: #4CAF50; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px;" %>
+  </div>
 </div>

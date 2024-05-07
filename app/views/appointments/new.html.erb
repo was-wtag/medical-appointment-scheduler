@@ -1,9 +1,11 @@
-<h1>New appointment</h1>
+<div style="max-width: 600px; margin: auto; padding: 20px; font-family: Arial, sans-serif; background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.15);">
+  <h1 style="text-align: center; color: #4CAF50;">New appointment</h1>
 
-<%= render "form", appointment: @appointment %>
+  <%= render "form", appointment: @appointment %>
 
-<br>
+  <br>
 
-<div>
-  <%= link_to "Back to appointments", appointments_path %>
+  <div style="text-align: center;">
+    <%= link_to "Back to appointments", appointments_path, style: "color: #4CAF50; text-decoration: none;" %>
+  </div>
 </div>
