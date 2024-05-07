@@ -40,4 +40,12 @@ class User < ApplicationRecord
   def profile
     doctor_profile || patient_profile
   end
+
+  def self.doctors
+    where(role: :doctor)
+  end
+
+  def self.patients
+    where(role: :patient)
+  end
 end
