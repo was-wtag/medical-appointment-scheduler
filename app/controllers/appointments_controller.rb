@@ -5,12 +5,13 @@ class AppointmentsController < ApplicationController
 
   before_action :authenticate!
   before_action :set_appointment, only: %i[show edit update destroy]
+  before_action :authorize_appointment
 
   attr_accessor :appointments, :appointment
 
   # GET /appointments or /appointments.json
   def index
-    self.appointments = Appointment.all
+    self.appointments = policy_scope(Appointment, policy_scope_class: AppointmentPolicy::Scope)
   end
 
   # GET /appointments/1 or /appointments/1.json
@@ -55,6 +56,10 @@ class AppointmentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
     self.appointment = Appointment.find(params[:id])
+  end
+
+  def authorize_appointment
+    authorize appointment, policy_class: AppointmentPolicy
   end
 
   # Only allow a list of trusted parameters through.

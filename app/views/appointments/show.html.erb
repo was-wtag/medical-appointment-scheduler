@@ -1,1 +1,11 @@
-<%= render @appointment %>
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
+  <h1 style="text-align: center; color: #4CAF50; font-size: 32px; margin-bottom: 30px;">Appointment Details</h1>
+  <%= render @appointment %>
+
+  <div style="text-align: center; margin-top: 30px;">
+    <% if current_user.patient? && @appointment.pending? %>
+      <%= link_to 'Reschedule', edit_appointment_path(@appointment), style: "background-color: #4CAF50; color: white; padding: 15px 0; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px; width: 150px;" %>
+    <% end %>
+    <%= link_to 'Back', appointments_path, style: "background-color: #007bff; color: white; padding: 15px 0; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px; width: 150px;" %>
+  </div>
+</div>

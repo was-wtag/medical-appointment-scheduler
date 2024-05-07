@@ -1,0 +1,8 @@
+<div id="<%= dom_id appointment %>" style="padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+  <div style="display: flex; align-items: center;">
+    <span style="display: inline-block; padding: 5px 10px; border-radius: 5px; background-color: <%= appointment.status == 'confirmed' ? '#28a745' : appointment.status == 'pending' ? '#ffc107' : '#dc3545' %>; color: white;"><strong><%= appointment.status.capitalize %></strong></span>
+    <p style="margin-left: 10px;">
+      <%= link_to appointment.patient.full_name, user_path(appointment.patient), style: "color: #4CAF50; text-decoration: none; font-weight: bold;" %> with Dr. <%= link_to appointment.doctor.full_name, user_path(appointment.doctor), style: "color: #4CAF50; text-decoration: none; font-weight: bold;" %>, <%= appointment.duration_minutes %> minutes @ <%= appointment.scheduled_time.strftime('%I:%M %p') %> on <%= appointment.scheduled_time.strftime('%d %b, %Y') %>.
+    </p>
+  </div>
+</div>
