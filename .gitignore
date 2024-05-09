@@ -36,3 +36,6 @@
 
 # Jetbrains
 /.idea
+
+# Google Cloud credentials
+/credentials*.json
