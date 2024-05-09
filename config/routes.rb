@@ -3,7 +3,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :appointments
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -32,6 +31,14 @@ Rails.application.routes.draw do
 
   # Doctors
   resources :doctors, only: %i[index show]
+
+  # Appointments with two extra routes for cancel and confirm
+  resources :appointments do
+    member do
+      put :cancel
+      put :confirm
+    end
+  end
 
   # Defines the root path route ("/")
   root to: redirect('/home/index')

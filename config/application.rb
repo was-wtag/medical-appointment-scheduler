@@ -34,5 +34,8 @@ module AppointmentScheduler
 
     # Use Sidekiq for ActiveJob
     config.active_job.queue_adapter = :sidekiq
+
+    # Set time zone to Dhaka
+    config.time_zone = 'Dhaka'
   end
 end
