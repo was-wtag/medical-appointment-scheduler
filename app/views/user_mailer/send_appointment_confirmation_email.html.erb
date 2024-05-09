@@ -1,0 +1,23 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+  <h1 style="color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Dear <%= @appointment.patient.full_name %>,</h1>
+  <p style="font-size: 1.2em; color: #333;">
+    Your appointment with Dr. <%= @appointment.doctor.full_name %> has been confirmed. Note that you can not reschedule the appointment anymore. Please be on time.
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    Details:<br>
+    Date: <%= @appointment.scheduled_time.strftime("%d/%m/%Y") %><br>
+    Time: <%= @appointment.scheduled_time.strftime("%I:%M %p") %>
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    You can view and interact with the event details by clicking the following link:<br>
+    <a href="<%= @appointment.event_link %>" style="color: #4CAF50; text-decoration: none;"><%= @appointment.title %></a>
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    For more details about the appointment, click the following link:<br>
+    <%= link_to "#{@appointment.title}", appointment_url(@appointment, host: 'localhost:3000') %>
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    Thank you,<br>
+    WellCare Team
+  </p>
+</div>

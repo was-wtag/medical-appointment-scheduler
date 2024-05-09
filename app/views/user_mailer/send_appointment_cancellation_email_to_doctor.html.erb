@@ -1,0 +1,20 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+  <h1 style="color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Dear Dr. <%= @appointment.doctor.full_name %>,</h1>
+  <p style="font-size: 1.2em; color: #333;">
+    We regret to inform you that your appointment with <%= @appointment.patient.full_name %> scheduled for <%= @appointment.scheduled_time.strftime("%d/%m/%Y at %I:%M %p") %> has been cancelled.
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    We apologize for any inconvenience this may cause. Our team will contact the patient shortly to reschedule the appointment.
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    For more details about the appointment, click the following link:<br>
+    <%= link_to "#{@appointment.title}", appointment_url(@appointment, host: 'localhost:3000') %>
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    If you have any questions or concerns, please do not hesitate to contact us.
+  </p>
+  <p style="font-size: 1.2em; color: #333;">
+    Thank you for your understanding,<br>
+    WellCare Team
+  </p>
+</div>

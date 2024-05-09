@@ -6,4 +6,71 @@ class UserMailer < ApplicationMailer
     @confirmation_token = confirmation_token
     mail(to: user_email, subject: 'Welcome to WellCare - Confirm Your Account')
   end
+
+  def send_appointment_emails(appointment, calendar_link)
+    @appointment = appointment
+    @calendar_link = calendar_link
+    mail(**appointment_email_params(@appointment, :patient))
+    mail(**appointment_email_params(@appointment, :doctor))
+  end
+
+  def send_appointment_reschedule_email(appointment, calendar_link)
+    @appointment = appointment
+    @calendar_link = calendar_link
+    mail(to: appointment.doctor.email, subject: "Appointment Reschedule with #{appointment.patient.full_name}")
+  end
+
+  def send_appointment_confirmation_email(appointment)
+    @appointment = appointment
+    mail(to: appointment.patient.email, subject: "Appointment Confirmation with Dr. #{appointment.doctor.full_name}")
+  end
+
+  def send_appointment_cancellation_email(appointment, for_)
+    @appointment = appointment
+    mail(**appointment_cancellation_email_params(appointment, for_))
+  end
+
+  private
+
+  def appointment_email_params(appointment, for_)
+    case for_
+    when :patient
+      {
+        to: appointment.patient.email,
+        subject: "Appointment Confirmation with Dr. #{appointment.doctor.full_name}",
+        template_path: 'user_mailer',
+        template_name: 'send_appointment_email_to_patient'
+      }
+    when :doctor
+      {
+        to: appointment.doctor.email,
+        subject: "Appointment Confirmation with #{appointment.patient.full_name}",
+        template_path: 'user_mailer',
+        template_name: 'send_appointment_email_to_doctor'
+      }
+    else
+      raise ArgumentError, 'Invalid recipient'
+    end
+  end
+
+  def appointment_cancellation_email_params(appointment, for_)
+    case for_
+    when :patient
+      {
+        to: appointment.patient.email,
+        subject: "Appointment Cancellation with Dr. #{appointment.doctor.full_name}",
+        template_path: 'user_mailer',
+        template_name: 'send_appointment_cancellation_email_to_patient'
+      }
+    when :doctor
+      {
+        to: appointment.doctor.email,
+        subject: "Appointment Cancellation with #{appointment.patient.full_name}",
+        template_path: 'user_mailer',
+        template_name: 'send_appointment_cancellation_email_to_doctor'
+      }
+    else
+      raise ArgumentError, 'Invalid recipient'
+    end
+  end
 end
