@@ -32,8 +32,16 @@ class AppointmentPolicy < ApplicationPolicy
     user.patient? && record.pending?
   end
 
+  def cancel?
+    !user.admin?
+  end
+
+  def confirm?
+    user.doctor?
+  end
+
   def destroy?
-    user.patient? && record.pending?
+    user.admin?
   end
 
   def permitted_attributes
