@@ -19,6 +19,10 @@ class Appointment < ApplicationRecord
     scheduled_time + duration_minutes.minutes
   end
 
+  def title
+    "#{patient.full_name}'s Appointment with Dr. #{doctor.full_name}"
+  end
+
   private
 
   def patient_to_be_patient
@@ -35,6 +39,7 @@ class Appointment < ApplicationRecord
 
   def scheduled_time_does_not_clash
     overlapping_appointments = Appointment.where.not(id:)
+                                          .where.not(status: :canceled)
                                           .where('doctor_id = ? OR patient_id = ?', doctor.id, patient.id)
                                           .where("(scheduled_time BETWEEN ? AND ?) OR ((scheduled_time + ? * INTERVAL '1 minute') BETWEEN ? AND ?)",
                                                  scheduled_time, end_time, duration_minutes, scheduled_time, end_time)
