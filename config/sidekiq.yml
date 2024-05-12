@@ -1,0 +1,6 @@
+update_appointment_status:
+  cron: "*/10 * * * *"
+  class: UpdateAppointmentStatus
+  queue: default
+  description: "Update appointment status every 10 minutes"
+    
