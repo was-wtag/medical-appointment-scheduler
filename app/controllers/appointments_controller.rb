@@ -46,7 +46,7 @@ class AppointmentsController < ApplicationController
   def update
     return render :edit, status: :unprocessable_entity unless appointment.update(appointment_params)
 
-    calendar_link, = self.event = appointment
+    calendar_link, = updated_event
     send_appointment_info(calendar_link)
 
     redirect_to appointment, notice: 'Appointment was successfully updated.'
@@ -79,20 +79,20 @@ class AppointmentsController < ApplicationController
 
   private
 
-  def event(appointment = self.appointment, event_service = EventService.new)
+  def event(event_service = EventService.new)
     event_service.share_calendar_with_attendees(appointment)
     created_event = event_service.create_event(appointment)
     calendar_link = event_service.calendar_link
     [calendar_link, created_event]
   end
 
-  def event=(appointment = self.appointment, event_service = EventService.new)
+  def updated_event(event_service = EventService.new)
     updated_event = event_service.update_event(appointment)
     calendar_link = event_service.calendar_link
     [calendar_link, updated_event]
   end
 
-  def send_appointment_info(calendar_link = nil, appointment = self.appointment)
+  def send_appointment_info(calendar_link = nil)
     case action_name
     when 'create'
       UserMailer.send_appointment_emails(appointment, calendar_link).deliver_now
@@ -111,6 +111,8 @@ class AppointmentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
     self.appointment = Appointment.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to appointments_url, alert: 'Appointment not found.'
   end
 
   def authorize_appointment
