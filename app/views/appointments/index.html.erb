@@ -15,7 +15,7 @@
           <% if current_user.doctor? && appointment.pending? %>
             <%= button_to "Confirm", confirm_appointment_path(appointment), method: :put, style: "background-color: purple; color: white; padding: 10px 0; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px; width: 150px;" %>
           <% end %>
-          <% if !current_user.admin? && !appointment.canceled? %>
+          <% if !current_user.admin? && !appointment.canceled? && !appointment.completed? %>
             <%= button_to "Cancel", cancel_appointment_path(appointment), method: :put, style: "background-color: orange; color: white; padding: 10px 0; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 5px; width: 150px;" %>
           <% end %>
           <% if current_user.admin? %>

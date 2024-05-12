@@ -12,7 +12,9 @@ class Appointment < ApplicationRecord
   validate :doctor_to_be_doctor, if: -> { doctor.present? }
   validate :scheduled_in_future, :scheduled_time_does_not_clash, if: lambda {
                                                                        scheduled_time.present?\
-                                                                         && duration_minutes.present?
+                                                                         && duration_minutes.present?\
+                                                                         && (attribute_changed?(:scheduled_time)\
+                                                                          || attribute_changed?(:duration_minutes))
                                                                      }
 
   def end_time
