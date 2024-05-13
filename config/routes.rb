@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   # Profile
   resource :profile, controller: :profile, only: %i[show edit update]
 
+  # Admin Dashboard
+  resource :dashboard, controller: :dashboard, only: %i[show]
+
   # Doctors
   resources :doctors, only: %i[index show] do
     collection do
