@@ -12,6 +12,11 @@
       <%= user_fields.label :last_name, style: "font-weight: bold;" %><br>
       <%= user_fields.text_field :last_name, style: "width: 100%; padding: 10px;" %>
     </div>
+    
+    <div style="margin-bottom: 20px;">
+      <%= user_fields.label :avatar, style: "font-weight: bold;" %><br>
+      <%= user_fields.file_field :avatar, style: "width: 100%; padding: 10px;" %>
+    </div>
 
     <div style="margin-bottom: 20px;">
       <%= user_fields.label :gender, style: "font-weight: bold;" %><br>

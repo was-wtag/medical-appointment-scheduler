@@ -99,8 +99,8 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     if action_name == 'create'
-      params.require('[user]').permit(:first_name, :last_name, :gender, :date_of_birth, :role, :email, :phone_number,
-                                      :password, :password_confirmation)
+      params.require('[user]').permit(:first_name, :last_name, :avatar, :gender, :date_of_birth, :role, :email,
+                                      :phone_number, :password, :password_confirmation)
     else
       params.require(:user).permit(:status)
     end
