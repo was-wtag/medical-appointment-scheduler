@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  PASSWORD_RESET_TOKEN_EXPIRES_IN = 5.minutes
+
   enum role: { admin: 0, doctor: 1, patient: 2 }
   enum gender: { not_specified: 0, female: 1, male: 2 }
   enum status: { pending: 0, active: 1, deleted: 2 }
 
   after_create :generate_confirmation_token, if: -> { pending? }
 
-  attr_accessor :confirmation_token
+  attr_accessor :confirmation_token, :password_reset_token
 
   has_secure_password
 
@@ -32,10 +34,15 @@ class User < ApplicationRecord
                                         purpose: :account_confirmation
   end
 
+  def generate_password_reset_token
+    self.password_reset_token = signed_id expires_in: PASSWORD_RESET_TOKEN_EXPIRES_IN,
+                                          purpose: :password_reset
+  end
+
   def send_confirmation_email
     UserMailer.send_confirmation_email(full_name, email, confirmation_token).deliver_later
   end
-  
+
   def send_confirmation_by_admin_email
     UserMailer.send_confirmation_by_admin_email(full_name, email).deliver_later
   end
