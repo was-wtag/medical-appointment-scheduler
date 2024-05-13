@@ -3,21 +3,12 @@
 class HomeController < ApplicationController
   include UserSettable
 
-  before_action lambda {
-                  self.action_to_user_finder = {
-                    index: User.method(:find)
-                  }
-                },
-                lambda {
-                  token = cookies[:jwt]
-                  user_id = JwtService.decode(token)['user_id']
-                  self.action_to_user_args = {
-                    index: { args: [user_id], kwargs: {} }
-                  }
-                }, :set_user, only: %i[index]
-
   def index
-    return unless cookies.key?(:jwt)
+    return unless cookies[:jwt]
+
+    set_action_to_user_finder
+    set_action_to_user_args
+    set_user
 
     redirect_to user.admin? ? dashboard_url : profile_url
   end
@@ -28,5 +19,28 @@ class HomeController < ApplicationController
 
   def signup
     redirect_to new_user_url
+  end
+
+  private
+
+  def set_action_to_user_finder
+    self.action_to_user_finder = {
+      index: User.method(:find)
+    }
+  end
+
+  def set_action_to_user_args
+    token = cookies[:jwt]
+
+    begin
+      user_id = JwtService.decode(token)['user_id']
+    rescue JWT::DecodeError || JWT::ExpiredSignature
+      cookies.delete(:jwt)
+      return redirect_to root_url, alert: 'Invalid Token.'
+    end
+
+    self.action_to_user_args = {
+      index: { args: [user_id], kwargs: {} }
+    }
   end
 end
