@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_one_attached :avatar
+
   has_one :doctor_profile, dependent: :destroy
   has_one :patient_profile, dependent: :destroy
   has_many :doctor_appointments, class_name: 'Appointment', foreign_key: 'doctor_id', dependent: :destroy
@@ -23,6 +25,7 @@ class User < ApplicationRecord
                            format: { with: /\A\+?[0-9]{1,3}-?[0-9]{1,14}\z/, allow_blank: true }
   validates :password, length: { minimum: 8 }, if: -> { new_record? || password.present? }
   validates :password_confirmation, presence: true, if: -> { new_record? || password.present? }
+  validate :avatar_to_be_within_size, :avatar_to_be_image
 
   def generate_confirmation_token
     self.confirmation_token = signed_id expires_in: ENV.fetch('CONFIRMATION_TOKEN_EXPIRES_IN', 5.minutes),
@@ -47,5 +50,25 @@ class User < ApplicationRecord
 
   def self.patients
     where(role: :patient)
+  end
+
+  private
+
+  def avatar_to_be_within_size
+    return unless avatar.attached?
+
+    return unless avatar.blob.byte_size > 300.kilobytes
+
+    avatar.purge
+    errors.add(:avatar, 'is too big')
+  end
+
+  def avatar_to_be_image
+    return unless avatar.attached?
+
+    return if avatar.blob.content_type.starts_with?('image/')
+
+    avatar.purge
+    errors.add(:avatar, 'is not an image')
   end
 end
