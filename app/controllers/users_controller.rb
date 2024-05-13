@@ -66,13 +66,13 @@ class UsersController < ApplicationController
 
   def save_user_and_profile
     ActiveRecord::Base.transaction do
-      user.save
+      raise ActiveRecord::Rollback unless user.save
 
       profile_model = profile_to_model[user.role]
       self.profile = profile_model.new(profile_params)
       profile.user = user
 
-      raise ActiveRecord::Rollback unless profile.save && user.errors.empty?
+      raise ActiveRecord::Rollback unless profile.save
     end
 
     user.errors.empty? && profile.errors.empty?
