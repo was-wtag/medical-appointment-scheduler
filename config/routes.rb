@@ -18,7 +18,11 @@ Rails.application.routes.draw do
   get 'home/signup'
 
   # User
-  resources :users
+  resources :users do
+    member do
+      put :confirm
+    end
+  end
 
   # Confirmations
   resources :confirmations, only: %i[new create show], param: :token
@@ -30,7 +34,11 @@ Rails.application.routes.draw do
   resource :profile, controller: :profile, only: %i[show edit update]
 
   # Doctors
-  resources :doctors, only: %i[index show]
+  resources :doctors, only: %i[index show] do
+    collection do
+      get :requests
+    end
+  end
 
   # Appointments with two extra routes for cancel and confirm
   resources :appointments do

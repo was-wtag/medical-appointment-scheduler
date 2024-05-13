@@ -25,6 +25,10 @@ class DoctorsController < ApplicationController
 
   def show; end
 
+  def requests
+    self.users = policy_scope(User, policy_scope_class: DoctorPolicy::Scope)
+  end
+
   private
 
   def authorize_doctor

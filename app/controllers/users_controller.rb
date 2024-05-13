@@ -47,6 +47,14 @@ class UsersController < ApplicationController
     redirect_to user, notice: 'User was successfully updated.'
   end
 
+  def confirm
+    return redirect_to user, alert: 'User is already confirmed.' if user.active?
+
+    user.active!
+
+    redirect_to user, notice: 'User was successfully confirmed.'
+  end
+
   # DELETE /users/1 or /users/1.json
   def destroy
     user.destroy!
@@ -77,7 +85,8 @@ class UsersController < ApplicationController
       create: User.method(:new),
       edit: User.method(:find),
       update: User.method(:find),
-      destroy: User.method(:find)
+      destroy: User.method(:find),
+      confirm: User.method(:find)
     }
   end
 
@@ -88,7 +97,8 @@ class UsersController < ApplicationController
       create: { args: [], kwargs: user_params },
       edit: { args: [params[:id]], kwargs: {} },
       update: { args: [params[:id]], kwargs: {} },
-      destroy: { args: [params[:id]], kwargs: {} }
+      destroy: { args: [params[:id]], kwargs: {} },
+      confirm: { args: [params[:id]], kwargs: {} }
     }
   end
 
