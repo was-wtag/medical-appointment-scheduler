@@ -6,6 +6,11 @@ class UserMailer < ApplicationMailer
     @confirmation_token = confirmation_token
     mail(to: user_email, subject: 'Welcome to WellCare - Confirm Your Account')
   end
+  
+  def send_confirmation_by_admin_email(doctor_full_name, doctor_email)
+    @doctor_full_name = doctor_full_name
+    mail(to: doctor_email, subject: 'Welcome to WellCare - Confirm Your Account')
+  end
 
   def send_appointment_emails(appointment, calendar_link)
     @appointment = appointment

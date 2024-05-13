@@ -1,0 +1,16 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box; background-color: #f8f9fa; border-radius: 5px;">
+	<h1 style="text-align: center; color: #333; font-size: 2em; margin-bottom: 20px;">Welcome to WellCare, Dr. <%= @doctor_full_name %></h1>
+	<p style="color: #333; font-size: 1.2em; line-height: 1.5; margin-bottom: 20px;">
+		Your account has been confirmed manually by the WellCare admin. You do not need to activate your account anymore. You can directly login using your credentials.
+	</p>
+	<p style="color: #333; font-size: 1.2em; line-height: 1.5; margin-bottom: 20px;">
+		<%= link_to 'Click here to login', home_login_url(host: 'localhost:3000'), style: "color: #007bff; text-decoration: none;" %>
+	</p>
+	<p style="color: #333; font-size: 1.2em; line-height: 1.5; margin-bottom: 20px;">
+		If you have any questions, please contact our support team.
+	</p>
+	<p style="color: #333; font-size: 1.2em; line-height: 1.5; margin-bottom: 20px;">
+		Best regards,<br>
+		WellCare Team
+	</p>
+</div>

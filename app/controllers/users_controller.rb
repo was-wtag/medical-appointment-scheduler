@@ -51,6 +51,7 @@ class UsersController < ApplicationController
     return redirect_to user, alert: 'User is already confirmed.' if user.active?
 
     user.active!
+    user.send_confirmation_by_admin_email
 
     redirect_to user, notice: 'User was successfully confirmed.'
   end

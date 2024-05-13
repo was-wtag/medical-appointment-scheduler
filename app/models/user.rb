@@ -35,6 +35,10 @@ class User < ApplicationRecord
   def send_confirmation_email
     UserMailer.send_confirmation_email(full_name, email, confirmation_token).deliver_later
   end
+  
+  def send_confirmation_by_admin_email
+    UserMailer.send_confirmation_by_admin_email(full_name, email).deliver_later
+  end
 
   def full_name
     "#{first_name} #{last_name}"
