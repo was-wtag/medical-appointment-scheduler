@@ -23,7 +23,9 @@
     <%= render partial: 'profile/doctor_profile', locals: { current_profile: @user.profile } %>
 
     <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px; width: 100%;">
+      <%= link_to 'Book Appointment', new_appointment_path(doctor_id: @user.id), style: "color: #fff; background-color: #28a745; border-color: #28a745; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
       <%= link_to 'Back to Doctors', doctors_path, style: "color: #fff; background-color: #007bff; border-color: #007bff; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
+    
     </div>
   </div>
 </div>

@@ -4,6 +4,19 @@
 			<%= image_tag(current_user.avatar.attached? ? url_for(current_user.avatar) : 'placeholder.jpg', alt: current_user.first_name, style: "height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;") %>
 		<% end %>
 		<p style="margin: 0 10px 0 0;"><%= link_to current_user.first_name, profile_path(current_user), style: "color: #333; text-decoration: none;" %></p>
+		
+		<% case current_user.role %>
+		<% when 'admin' %>
+			<%= link_to 'Dashboard', dashboard_path, style: "background-color: #3f51b5; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+			<%= link_to 'Users', users_path, style: "background-color: #3f51b5; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+			<%= link_to 'Doctor Requests', requests_doctors_path, style: "background-color: #3f51b5; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+		<% when 'patient' %>
+			<%= link_to 'Doctors', doctors_path, style: "background-color: #4caf50; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+			<%= link_to 'Appointments', appointments_path, style: "background-color: #4caf50; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+		<% when 'doctor' %>
+			<%= link_to 'Appointments', appointments_path, style: "background-color: #f44336; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+		<% end %>
+		
 		<%= link_to 'Change Password', new_password_path, style: "background-color: #3f51b5; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
 		<%= button_to 'Logout', auth_path, method: :delete, style: "background-color: #f44336; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none;" %>
 	</div>

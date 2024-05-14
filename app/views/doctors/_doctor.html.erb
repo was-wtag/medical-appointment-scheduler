@@ -5,8 +5,9 @@
       <div style="background-color: purple; color: #fff; padding: .375rem .75rem; border-radius: .25rem;"><%= doctor.profile.specialty %></div>
     </div>
   </div>
-
+  
   <div style="display: flex; flex-direction: column; gap: 10px;">
     <%= link_to 'Details', doctor_path(doctor), style: "color: #fff; background-color: #28a745; border-color: #28a745; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; margin-bottom: 10px; text-decoration: none;" %>
+    <%= link_to 'Book Appointment', new_appointment_path(doctor_id: doctor.id), style: "color: #fff; background-color: #007bff; border-color: #007bff; display: block; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; text-decoration: none;" %>
   </div>
 </div>
