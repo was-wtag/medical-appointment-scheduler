@@ -30,6 +30,24 @@ Rails.application.routes.draw do
   # Authentication
   resource :auth, controller: :auth, only: %i[new create destroy]
 
+  # Password
+  resource :password, controller: :password, only: %i[new] do
+    collection do
+      put :create
+      resources :reset, controller: :password, only: %i[show], param: :token do
+        collection do
+          resource :verify, controller: :password, only: %i[] do
+            get :new, action: :verify_new
+            post :create, action: :verify_create
+          end
+        end
+        member do
+          put :create, action: :reset_create
+        end
+      end
+    end
+  end
+
   # Profile
   resource :profile, controller: :profile, only: %i[show edit update]
 

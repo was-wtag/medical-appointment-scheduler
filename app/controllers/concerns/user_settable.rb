@@ -14,5 +14,7 @@ module UserSettable
     args = action_to_user_args[action_name.to_sym]
 
     self.user = finder.call(*args[:args], **args[:kwargs])
+  rescue StandardError
+    self.user = nil
   end
 end
