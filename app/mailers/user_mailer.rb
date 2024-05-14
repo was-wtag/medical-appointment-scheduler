@@ -7,6 +7,12 @@ class UserMailer < ApplicationMailer
     mail(to: user_email, subject: 'Welcome to WellCare - Confirm Your Account')
   end
   
+  def send_verification_email(user_full_name, user_email, verification_token)
+    @user_full_name = user_full_name
+    @verification_token = verification_token
+    mail(to: user_email, subject: 'WellCare Password Reset - Verify Your Email')
+  end
+  
   def send_confirmation_by_admin_email(doctor_full_name, doctor_email)
     @doctor_full_name = doctor_full_name
     mail(to: doctor_email, subject: 'Welcome to WellCare - Confirm Your Account')
