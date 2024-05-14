@@ -38,6 +38,10 @@ class User < ApplicationRecord
     self.password_reset_token = signed_id expires_in: PASSWORD_RESET_TOKEN_EXPIRES_IN,
                                           purpose: :password_reset
   end
+  
+  def send_verification_email
+    UserMailer.send_verification_email(full_name, email, password_reset_token).deliver_now
+  end
 
   def send_confirmation_email
     UserMailer.send_confirmation_email(full_name, email, confirmation_token).deliver_later
