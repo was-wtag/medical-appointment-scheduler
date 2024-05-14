@@ -1,6 +1,10 @@
 <% if current_user %>
-  <div style="position: fixed; top: 10px; right: 10px; display: flex; align-items: center; justify-content: space-between;">
-    <p style="margin: 0 10px 0 0;"><%= link_to current_user.first_name, user_path(current_user) %></p>
-    <%= button_to 'Logout', auth_path, method: :delete, style: "background-color: red; color: white; border: none; padding: 12px 24px; letter-spacing: 0.5px; transition: all 0.3s ease 0s; cursor: pointer;" %>
-  </div>
+	<div style="position: fixed; top: 10px; right: 10px; display: flex; align-items: center; justify-content: space-between; padding: 10px; background-color: #f8f9fa; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.15);">
+		<%= link_to profile_path do %>
+			<%= image_tag(current_user.avatar.attached? ? url_for(current_user.avatar) : 'placeholder.jpg', alt: current_user.first_name, style: "height: 50px; width: 50px; border-radius: 50%; margin-right: 10px;") %>
+		<% end %>
+		<p style="margin: 0 10px 0 0;"><%= link_to current_user.first_name, profile_path(current_user), style: "color: #333; text-decoration: none;" %></p>
+		<%= link_to 'Change Password', new_password_path, style: "background-color: #3f51b5; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none; margin-right: 10px;" %>
+		<%= button_to 'Logout', auth_path, method: :delete, style: "background-color: #f44336; color: #fff; padding: 6px 16px; font-size: 0.875rem; min-width: 64px; box-sizing: border-box; transition: background-color 0.3s; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none;" %>
+	</div>
 <% end %>
