@@ -10,6 +10,20 @@
     <%= form.label :last_name, style: "font-weight: bold;" %><br>
     <%= form.text_field :last_name, style: "width: 100%; padding: 10px;" %>
   </div>
+  
+  <div style="margin-bottom: 20px; display: flex; align-items: center;">
+    <%= form.label :avatar, style: "font-weight: bold; margin-right: 10px;" %>
+    <% if user.avatar.attached? %>
+      <%= image_tag url_for(user.avatar), style: "width: 50px; height: auto; margin-right: 10px;" %>
+      <p style="margin-right: 10px;"><%= user.avatar.filename %></p>
+      <%= form.check_box :purge, style: "width: 20px; height: 20px; cursor: pointer;", checked: false %>
+    <% else %>
+      <%= image_tag 'placeholder.jpg', style: "width: 50px; height: auto; margin-right: 10px;" %>
+      <p style="margin-right: 10px;">No avatar uploaded</p>
+    <% end %>
+    <%= form.file_field :avatar, style: "width: auto; padding: 10px; box-sizing: border-box;" %>
+  </div>
+  
 
   <div style="margin-bottom: 20px;">
     <%= form.label :gender, style: "font-weight: bold;" %><br>
@@ -22,21 +36,12 @@
   </div>
 
   <div style="margin-bottom: 20px;">
-    <%= form.label :role, style: "font-weight: bold;" %><br>
-    <%= form.select :role, User.roles.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <%= form.label :email, style: "font-weight: bold;" %><br>
-    <%= form.email_field :email, style: "width: 100%; padding: 10px;" %>
-  </div>
-
-  <div style="margin-bottom: 20px;">
     <%= form.label :phone_number, style: "font-weight: bold;" %><br>
     <%= form.telephone_field :phone_number, style: "width: 100%; padding: 10px;" %>
   </div>
 
   <div>
     <%= form.submit "Update", style: "background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" %>
-  </div>
+ </div>
+  
 <% end %>

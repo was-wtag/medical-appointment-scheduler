@@ -42,9 +42,16 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    return render :edit, status: :unprocessable_entity unless user.update(user_params)
-
-    redirect_to user, notice: 'User was successfully updated.'
+    ActiveRecord::Base.transaction do
+      user.avatar.purge if purge_avatar?
+      
+      unless user.update(user_params)
+        render :edit, status: :unprocessable_entity
+        raise ActiveRecord::Rollback
+      end
+    end
+    
+    redirect_to edit_profile_url, notice: 'User was successfully updated.'
   end
 
   def confirm
@@ -115,6 +122,16 @@ class UsersController < ApplicationController
     else
       params.require(:user).permit(:status)
     end
+    
+    case action_name
+    when 'create'
+      params.require('[user]').permit(:first_name, :last_name, :avatar, :gender, :date_of_birth, :role, :email,
+                                      :phone_number, :password, :password_confirmation)
+    when 'update'
+      params.require(:user).permit(:first_name, :last_name, :avatar, :gender, :date_of_birth, :phone_number)
+    else
+      params.require(:user).permit(:status)
+    end
   rescue ActionController::ParameterMissing
     {}
   end
@@ -127,5 +144,14 @@ class UsersController < ApplicationController
     else
       {}
     end
+  end
+  
+  def avatar_params
+    params.require(:user).permit(:avatar, :purge)
+  end
+  
+  def purge_avatar?
+    avatar, purge = avatar_params.values_at(:avatar, :purge)
+    avatar.nil? && purge == '1'
   end
 end

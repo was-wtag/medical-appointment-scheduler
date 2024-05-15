@@ -18,7 +18,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    !user.admin? && user == record
   end
 
   def confirm?
