@@ -4,6 +4,7 @@
   <h1 style="text-align: center; color: #3f51b5;">Profile</h1>
 
   <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px; padding: 20px;">
+    <%= image_tag (@current_user.avatar.attached? ? url_for(@current_user.avatar) : 'placeholder.jpg'), style: "width: 50%; height: auto;" %>
     <h2 style="color: #3f51b5;"><%= @current_user.full_name.upcase %></h2>
     <span style="background-color: <%= @current_user.gender == 'Male' ? '#2196f3' : @current_user.gender == 'Female' ? '#e91e63' : '#9e9e9e' %>; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 5px;"><%= @current_user.gender %></span>
     <span style="background-color: <%= @current_user.role == 'Admin' ? '#4caf50' : @current_user.role == 'Patient' ? '#ff9800' : '#9c27b0' %>; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 5px;"><%= @current_user.role %></span>
