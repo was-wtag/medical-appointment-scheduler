@@ -8,6 +8,8 @@ class UsersController < ApplicationController
   before_action except: %i[index] do
     set_user { |finder, args| finder.call(*args[:args], **args[:kwargs]) }
   end
+  before_action -> { redirect_back fallback_location: root_url, alert: 'User Not Found.' if user.nil? },
+                except: %i[index new create]
 
   before_action :authenticate!, except: %i[new create]
   before_action :do_not_authenticate!, only: %i[new create]
