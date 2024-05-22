@@ -44,13 +44,13 @@ class UsersController < ApplicationController
   def update
     ActiveRecord::Base.transaction do
       user.avatar.purge if purge_avatar?
-      
+
       unless user.update(user_params)
         render :edit, status: :unprocessable_entity
         raise ActiveRecord::Rollback
       end
     end
-    
+
     redirect_to edit_profile_url, notice: 'User was successfully updated.'
   end
 
@@ -58,9 +58,25 @@ class UsersController < ApplicationController
     return redirect_to user, alert: 'User is already confirmed.' if user.active?
 
     user.active!
-    user.send_confirmation_by_admin_email
+    user.send_confirmation_by_admin_email if user.doctor?
 
     redirect_to user, notice: 'User was successfully confirmed.'
+  end
+
+  def pending
+    return redirect_to user, alert: 'User is already pending.' if user.pending?
+
+    user.pending!
+
+    redirect_to user, notice: 'User was successfully set as pending.'
+  end
+
+  def delete
+    return redirect_to user, alert: 'User is already deleted.' if user.deleted?
+
+    user.deleted!
+
+    redirect_to user, notice: 'User was successfully set as deleted.'
   end
 
   # DELETE /users/1 or /users/1.json
@@ -94,7 +110,9 @@ class UsersController < ApplicationController
       edit: User.method(:find),
       update: User.method(:find),
       destroy: User.method(:find),
-      confirm: User.method(:find)
+      confirm: User.method(:find),
+      pending: User.method(:find),
+      delete: User.method(:find)
     }
   end
 
@@ -106,7 +124,9 @@ class UsersController < ApplicationController
       edit: { args: [params[:id]], kwargs: {} },
       update: { args: [params[:id]], kwargs: {} },
       destroy: { args: [params[:id]], kwargs: {} },
-      confirm: { args: [params[:id]], kwargs: {} }
+      confirm: { args: [params[:id]], kwargs: {} },
+      pending: { args: [params[:id]], kwargs: {} },
+      delete: { args: [params[:id]], kwargs: {} }
     }
   end
 
@@ -122,7 +142,7 @@ class UsersController < ApplicationController
     else
       params.require(:user).permit(:status)
     end
-    
+
     case action_name
     when 'create'
       params.require('[user]').permit(:first_name, :last_name, :avatar, :gender, :date_of_birth, :role, :email,
@@ -145,11 +165,11 @@ class UsersController < ApplicationController
       {}
     end
   end
-  
+
   def avatar_params
     params.require(:user).permit(:avatar, :purge)
   end
-  
+
   def purge_avatar?
     avatar, purge = avatar_params.values_at(:avatar, :purge)
     avatar.nil? && purge == '1'

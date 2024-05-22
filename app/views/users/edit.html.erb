@@ -1,23 +1,14 @@
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
-  <h1 style="text-align: center; color: #4CAF50; font-size: 2em; margin-bottom: 20px;">Update User Status</h1>
-
-  <%= form_with(model: @user, local: true) do |form| %>
-    <%= render partial: 'application/errors', locals: { instance: @user } %>
-
-    <div style="margin-bottom: 20px;">
-      <%= form.label :status, style: "font-weight: bold;" %><br>
-      <%= form.select :status, User.statuses.keys.map { |w| [w.humanize, w] }, style: "width: 100%; padding: 10px;" %>
-    </div>
-
-    <div>
-      <%= form.submit "Update", style: "background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" %>
-    </div>
-  <% end %>
-
-  <br>
-
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box; background-color: #f8f9fa; border-radius: 5px;">
+  <h1 style="text-align: center; color: #343a40; font-size: 2em; margin-bottom: 20px;">Change User Status</h1>
+  
+  <p style="text-align: center; font-size: 1.2em; margin-bottom: 20px; color: #6c757d;">The user <%= @user.first_name %> <%= @user.last_name %>'s current status is <%= @user.status %>.</p>
+  
+  <%= button_to 'Confirm User', confirm_user_path(@user), method: :put, data: { confirm: 'Are you sure you want to confirm this user?' }, style: "display: block; width: 100%; padding: 10px; color: #fff; background-color: #28a745; border: none; border-radius: 5px; text-align: center; margin-bottom: 10px;" %>
+  <%= button_to 'Set as Pending', pending_user_path(@user), method: :put, data: { confirm: 'Are you sure you want to set this user as pending?' }, style: "display: block; width: 100%; padding: 10px; color: #fff; background-color: #ffc107; border: none; border-radius: 5px; text-align: center; margin-bottom: 10px;" %>
+  <%= button_to 'Mark as Deleted', delete_user_path(@user), method: :put, data: { confirm: 'Are you sure you want to delete this user?' }, style: "display: block; width: 100%; padding: 10px; color: #fff; background-color: #dc3545; border: none; border-radius: 5px; text-align: center; margin-bottom: 10px;" %>
+  
   <div style="text-align: center; margin-top: 20px;">
-    <%= link_to "Show this user", @user, style: "color: #4CAF50; text-decoration: none; border-bottom: 1px solid #4CAF50;" %> |
-    <%= link_to "Back to users", users_path, style: "color: #4CAF50; text-decoration: none; border-bottom: 1px solid #4CAF50;" %>
+    <%= link_to "Show this user", @user, style: "color: #007bff; text-decoration: none; border-bottom: 1px solid #007bff;" %> |
+    <%= link_to "Back to users", users_path, style: "color: #007bff; text-decoration: none; border-bottom: 1px solid #007bff;" %>
   </div>
 </div>

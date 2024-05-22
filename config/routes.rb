@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   resources :users do
     member do
       put :confirm
+      put :pending
+      put :delete
     end
   end
 

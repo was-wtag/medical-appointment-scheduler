@@ -17,11 +17,23 @@ class UserPolicy < ApplicationPolicy
     user.nil?
   end
 
+  def edit?
+    user.admin?
+  end
+
   def update?
     !user.admin? && user == record
   end
 
   def confirm?
+    user.admin?
+  end
+
+  def pending?
+    user.admin?
+  end
+
+  def delete?
     user.admin?
   end
 
