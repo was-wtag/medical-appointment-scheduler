@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
   CONFIRMATION_TOKEN_EXPIRES_IN = 5.minutes
 

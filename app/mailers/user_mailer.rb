@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UserMailer < ApplicationMailer
   def send_confirmation_email(user)
     @user = user

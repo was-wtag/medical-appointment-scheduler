@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class CreateUsers < ActiveRecord::Migration[7.1]
   def add_unique_constraints(table_name, columns)
     columns.each do |column|
