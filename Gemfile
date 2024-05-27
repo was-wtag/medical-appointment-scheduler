@@ -57,8 +57,9 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rspec-rails'
+  gem 'ffaker'
   gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'rubocop', require: false
 end
 

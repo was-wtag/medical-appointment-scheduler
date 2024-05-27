@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require 'factory_bot'
-require 'rails_helper'
-
 RSpec.describe ConfirmationsController, type: :controller do
-  let!(:user_jane_doe) { FactoryBot.create(:user_jane_doe) }
+  let!(:first_user) { FactoryBot.create(:first_user) }
 
   context 'GET #new' do
     it 'should return success response' do
@@ -32,22 +29,22 @@ RSpec.describe ConfirmationsController, type: :controller do
 
   context 'GET #show with valid token' do
     it 'should return notice message' do
-      user_jane_doe.generate_confirmation_token
-      get :show, params: { token: user_jane_doe.confirmation_token }
+      first_user.generate_confirmation_token
+      get :show, params: { token: first_user.confirmation_token }
       expect(flash.now[:notice]).to eq('Account confirmation successful')
     end
 
     it 'should render the show template' do
-      user_jane_doe.generate_confirmation_token
-      get :show, params: { token: user_jane_doe.confirmation_token }
+      first_user.generate_confirmation_token
+      get :show, params: { token: first_user.confirmation_token }
       expect(response).to render_template(:show)
     end
 
     it 'should change user status to active' do
-      user_jane_doe.generate_confirmation_token
-      get :show, params: { token: user_jane_doe.confirmation_token }
-      user_jane_doe.reload
-      expect(user_jane_doe.status).to eq('active')
+      first_user.generate_confirmation_token
+      get :show, params: { token: first_user.confirmation_token }
+      first_user.reload
+      expect(first_user.status).to eq('active')
     end
   end
 
@@ -65,24 +62,24 @@ RSpec.describe ConfirmationsController, type: :controller do
 
   context 'POST #create with valid email' do
     it 'should return notice message' do
-      get :create, params: { email: user_jane_doe.email }
+      get :create, params: { email: first_user.email }
       expect(flash[:notice]).to eq('Confirmation email sent')
     end
 
     it 'should redirect to new_confirmation_url' do
-      get :create, params: { email: user_jane_doe.email }
+      get :create, params: { email: first_user.email }
       expect(response).to redirect_to(new_confirmation_url)
     end
 
     it 'should re-generate confirmation token' do
-      user_jane_doe.generate_confirmation_token
-      get :create, params: { email: user_jane_doe.email }
-      expect(assigns(:user).confirmation_token).not_to eq(user_jane_doe.confirmation_token)
+      first_user.generate_confirmation_token
+      get :create, params: { email: first_user.email }
+      expect(assigns(:user).confirmation_token).not_to eq(first_user.confirmation_token)
     end
 
     it 'should re-send confirmation email' do
       expect do
-        get :create, params: { email: user_jane_doe.email }
+        get :create, params: { email: first_user.email }
       end.to change(ActionMailer::Base.deliveries, :count).by(1)
     end
   end

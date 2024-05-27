@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_jane_doe, class: User do
-    first_name { 'Jane' }
-    last_name { 'Doe' }
+  factory :first_user, class: User do
+    first_name { FFaker::Name.first_name_female }
+    last_name { FFaker::Name.last_name }
     gender { 'female' }
-    date_of_birth { '1990-01-01' }
+    date_of_birth { FFaker::Time.date }
     role { 'patient' }
-    email { 'janedoe@example.com' }
-    phone_number { '+8801611111111' }
-    password { 'janedoepassword' }
-    password_confirmation { 'janedoepassword' }
+    email { 'user1@example.com' }
+    phone_number { '+8801711111111' }
+    password { FFaker::Internet.password }
+    password_confirmation { password }
 
     trait :update_first_name do
-      first_name { 'Janet' }
+      first_name { FFaker::Name.first_name_female }
     end
 
     trait :missing_first_name do
@@ -21,16 +21,16 @@ FactoryBot.define do
     end
   end
 
-  factory :user_john_doe, class: User do
-    first_name { 'John' }
-    last_name { 'Doe' }
+  factory :second_user, class: User do
+    first_name { FFaker::Name.first_name_male }
+    last_name { FFaker::Name.last_name }
     gender { 'male' }
-    date_of_birth { '1990-01-01' }
+    date_of_birth { FFaker::Time.date }
     role { 'patient' }
-    email { 'johndoe@example.com' }
-    phone_number { '+8801711111111' }
-    password { 'johndoepassword' }
-    password_confirmation { 'johndoepassword' }
+    email { FFaker::Internet.unique.email }
+    phone_number { '+8801611111111' }
+    password { FFaker::Internet.password }
+    password_confirmation { password }
 
     trait :missing_first_name do
       first_name { nil }
@@ -75,11 +75,11 @@ FactoryBot.define do
     end
 
     trait :duplicate_email do
-      email { FactoryBot.attributes_for(:user_jane_doe)[:email] }
+      email { FactoryBot.attributes_for(:first_user)[:email] }
     end
 
     trait :duplicate_phone_number do
-      phone_number { FactoryBot.attributes_for(:user_jane_doe)[:phone_number] }
+      phone_number { FactoryBot.attributes_for(:first_user)[:phone_number] }
     end
   end
 end
