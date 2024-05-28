@@ -14,6 +14,9 @@ gem 'importmap-rails'
 # Use PostgreSQL as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
+# Use Phony for phone number validation
+gem 'phony_rails'
+
 # Use Postmark for sending emails
 gem 'postmark-rails'
 

@@ -16,8 +16,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true, length: { maximum: 128 }
   validates :gender, :date_of_birth, :role, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
-  validates :phone_number, presence: true, uniqueness: true,
-                           format: { with: /\A\+?[0-9]{1,3}-?[0-9]{1,14}\z/, allow_blank: true }
+  validates :phone_number, presence: true, uniqueness: true, phony_plausible: true
   validates :password, length: { minimum: 8 }, if: -> { new_record? || password.present? }
 
   def generate_confirmation_token
