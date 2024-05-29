@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
   validates :phone_number, presence: true, uniqueness: true, phony_plausible: true
   validates :password, length: { minimum: 8 }, if: -> { new_record? || password.present? }
+  validates :password_confirmation, presence: true, if: -> { new_record? || password.present? }
 
   def generate_confirmation_token
     self.confirmation_token = signed_id expires_in: CONFIRMATION_TOKEN_EXPIRES_IN, purpose: :account_confirmation
