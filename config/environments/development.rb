@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,13 +19,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -40,6 +40,9 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
+
+  # Do not send mail to real world in development environment
+  config.action_mailer.perform_deliveries = false
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -73,4 +76,17 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Configure ActionMailer to use SendGrid
+  config.action_mailer.smtp_settings = {
+    user_name: ENV.fetch('SENDGRID_USERNAME', 'apikey'),
+    password: ENV.fetch('SENDGRID_API_KEY') do
+      warn 'Missing SENDGRID_API_KEY environment variable. Please set it.'
+    end,
+    domain: ENV.fetch('SENDGRID_DOMAIN', 'sameenweasee@gmail.com'),
+    address: ENV.fetch('SENDGRID_ADDRESS', 'smtp.sendgrid.net'),
+    port: ENV.fetch('SENDGRID_PORT', 587).to_i,
+    authentication: ENV.fetch('SENDGRID_AUTHENTICATION', 'plain').to_sym,
+    enable_starttls_auto: ENV.fetch('SENDGRID_ENABLE_STARTTLS_AUTO', 'false') == 'true'
+  }
 end

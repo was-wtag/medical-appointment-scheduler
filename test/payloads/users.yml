@@ -1,0 +1,66 @@
+valid_user: &valid_user
+  first_name: 'Mohammad'
+  last_name: 'Samin-Al-Wasee'
+  gender: 'male'
+  date_of_birth: '1999-01-17'
+  role: 'admin'
+  email: 'sameenwasee@gmail.com'
+  phone_number: '+8801714454773'
+  password: 'saminalwasee'
+  password_confirmation: 'saminalwasee'
+
+missing_first_name:
+  <<: *valid_user
+  first_name: ~
+
+missing_last_name:
+  <<: *valid_user
+  last_name: ~
+
+missing_gender:
+  <<: *valid_user
+  gender: ~
+
+missing_date_of_birth:
+  <<: *valid_user
+  date_of_birth: ~
+
+missing_role:
+  <<: *valid_user
+  role: ~
+
+missing_email:
+  <<: *valid_user
+  email: ~
+
+missing_phone_number:
+  <<: *valid_user
+  phone_number: ~
+
+missing_password:
+  <<: *valid_user
+  password: ~
+
+invalid_email_format:
+  <<: *valid_user
+  email: 'invalid_email'
+
+invalid_phone_number_format:
+  <<: *valid_user
+  phone_number: 'invalid_phone_number'
+
+invalid_password:
+  <<: *valid_user
+  password: 'short'
+
+invalid_password_confirmation:
+  <<: *valid_user
+  password_confirmation: 'not_matching'
+
+duplicate_email:
+  <<: *valid_user
+  email: 'johndoe@example.com' # Same email as user :one in 'fixtures/users.yml'
+
+duplicate_phone_number:
+  <<: *valid_user
+  phone_number: '+8801711111111' # Same phone number as user :one in 'fixtures/users.yml'
