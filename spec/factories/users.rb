@@ -1,13 +1,13 @@
-# frozen_string_literal: true
-
 FactoryBot.define do
-  factory :first_user, class: User do
+  female_user_email = FFaker::Internet.unique.email
+
+  factory :female_user, class: User do
     first_name { FFaker::Name.first_name_female }
     last_name { FFaker::Name.last_name }
     gender { 'female' }
     date_of_birth { FFaker::Time.date }
     role { 'patient' }
-    email { 'user1@example.com' }
+    email { female_user_email }
     phone_number { '+8801711111111' }
     password { FFaker::Internet.password }
     password_confirmation { password }
@@ -21,7 +21,7 @@ FactoryBot.define do
     end
   end
 
-  factory :second_user, class: User do
+  factory :male_user, class: User do
     first_name { FFaker::Name.first_name_male }
     last_name { FFaker::Name.last_name }
     gender { 'male' }
@@ -75,11 +75,11 @@ FactoryBot.define do
     end
 
     trait :duplicate_email do
-      email { FactoryBot.attributes_for(:first_user)[:email] }
+      email { female_user_email }
     end
 
     trait :duplicate_phone_number do
-      phone_number { FactoryBot.attributes_for(:first_user)[:phone_number] }
+      phone_number { FactoryBot.attributes_for(:female_user)[:phone_number] }
     end
   end
 end
